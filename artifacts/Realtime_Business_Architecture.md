@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # Realtime Switch (NexusV4) - Business & Architectural Overview
 
@@ -511,4 +511,5 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+

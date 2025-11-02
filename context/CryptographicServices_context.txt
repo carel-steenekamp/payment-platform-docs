@@ -1,0 +1,274 @@
+# Cryptographic Services - Technical Context
+# AI Agent Working Notes
+# Last Updated: 2025-11-02
+
+## Component Location
+
+**Solution**: C:\_development\Massmart\PinTranslationService
+**Main Project**: C:\_development\Massmart\PinTranslationService\PinTranslationService
+**Framework**: CausalNexus (.NET Core 2.2)
+**Type**: Windows Service / Message Processor Module
+
+## Key Files Analyzed
+
+### Core Implementation
+- `PinTranslation.cs` (355 lines) - Main module implementation
+  - Location: PinTranslationService/PinTranslation.cs
+  - Class: PinTranslation : FrameworkMessageProcessor, ISystemStartParticipant
+  - Module ID: "PinTranslation"
+
+### Data Models
+- `PinTranslationSettings.cs` - Configuration structure
+  - BdkConfig: Base Derivation Key management
+  - IssuerConfig: Key Working PIN per issuer
+  - XML key container loading (Atalla format)
+
+- `PinTranslateRequest.cs` - Request DTO
+  - Properties: pan, pinBlock, keySerial, issuer
+
+- `PinTranslateResponse.cs` - Response DTO (not analyzed yet)
+- `PinEntryDevice.cs` - Device enum/configuration (not analyzed yet)
+
+### Supporting Projects
+- `PinTranslationAccess` - Database access layer
+- `PinTranslationDatabase` - Database schema/migrations
+
+## Architecture Overview
+
+### CausalNexus Integration
+- Uses FrameworkMessageProcessor base class
+- EmitterBridge for message routing
+- CommonMessageContainer for message passing
+- ChannelIdentifiers attribute for routing configuration
+
+### Message Flow
+1. MessageReceiver(CommonMessageContainer) - Entry point
+2. ReceivedPinTranslateMessage() - Request processing
+3. ProcessPinTranslate() - HSM translation
+4. EmitMessage() - Response routing to:
+   - ModuleJsonSourceNode (response back to caller)
+   - ModuleMessageLogger (audit trail)
+
+### Message Tags
+- TagSource, TagDestination: Routing
+- TagChain, TagMerchant, TagTerminalId: Transaction context
+- TagIssuer, TagPan, TagPinBlock, TagKsn: Cryptographic inputs
+- TagBdk, TagKwp: Key identifiers
+- TagPinBlock2: Translated output
+- TagResultCode, TagResultMessage: Response status
+
+## HSM Integration
+
+### Provider Abstraction
+- Interface: IHSMProvider
+- Factory: HSMProviderFactory.TryGetThalesHSMProvider()
+- Implementation: Thales HSM
+
+### DUKPT Translation Method
+```
+_hsm.TranslatePINBlockDUKPT(TranslatePINBlockDUKPTRequestData)
+```
+
+**Parameters**:
+- source_info (PINBlockDUKPTInfo):
+  - key_serial_number_identifier: "609"
+  - derivation_key_under_storage_key: BDK (byte array)
+  - double_length_ipek: true
+  - key_serial_number: KSN (from Hex.Bytes)
+  - pin_block_format: PINBlockFormat.ANSI_X98
+  - additional_data: PAN padded to 19 digits
+
+- destination_info (PINBlockInfo):
+  - key_under_storage_key: KWP (byte array)
+  - pin_block_format: PINBlockFormat.ANSI_X98
+  - additional_data: PAN padded to 19 digits
+
+- pin_block: Source encrypted PIN block (from Hex.Bytes)
+
+**Returns**:
+- pin_block: Translated PIN block (byte array)
+
+## Configuration Management
+
+### Settings Path
+- `Applications\PinTranslation\PinTranslationSettings.json`
+- Hot-reload via CustomConfigurationDevice with FileWatcher
+
+### Keys Directory
+- `Applications\PinTranslation\Keys`
+- Contains XML key containers (Atalla format)
+
+### Default Configuration
+
+**BDK Keys** (4 configured):
+- absa1: sim_bdk_absa1.xml
+- absa2: sim_bdk_absa2.xml
+- sbsa1: sim_bdk_sbsa1.xml
+- sbsa2: sim_bdk_sbsa2.xml
+
+**Issuer Keys** (2 configured):
+- absa:
+  - KEK: sim_kek_absa.xml
+  - KWP: sim_kwp_absa.xml
+  - TestKwp: D0AD2CB357193EDCAB317CD6AD077010
+
+- sbsa:
+  - KEK: sim_kek_sbsa.xml
+  - KWP: sim_kwp_sbsa.xml
+  - TestKwp: 5410B69ECEAB2F80EF5BF4292C75CEA8
+
+## Key Processing Logic
+
+### BDK Discovery Algorithm (Lines 182-217)
+1. Check database for terminal's known BDK
+2. If found, attempt translation with that BDK
+3. If fails or not found, iterate through all configured BDKs
+4. On success, persist terminal-to-BDK mapping
+5. If all BDKs fail, return error code 96 (Malfunction)
+
+**Database Methods**:
+- `Access.GetTerminalBdk(terminalId, out bdkId)` - Retrieve mapping
+- `Access.SetTerminalBdk(terminalId, bdkId)` - Store successful mapping
+- `Access.DeleteTerminal(terminalId)` - Remove invalid mapping
+
+### Test Mode (Line 167-170)
+- Special KSN value: "GENERATE"
+- Triggers ProcessTestPinTranslate()
+- Uses PINBlock.ANSI_X98.Encode() for clear PIN encoding
+- Uses DESUtility.ECB() with test KWP
+- Bypasses HSM entirely
+
+## Error Handling
+
+### Result Codes
+- "00" = Success
+- "96" = Malfunction (format error, key error, HSM error)
+
+### Validation Checks (Lines 156-165)
+- Terminal ID: Must be present
+- Issuer: Must be present and configured
+- PAN: Must be present
+- PIN Block: Must be present
+- KSN: Must be present
+
+### HSM Exception Handling (Lines 249-255)
+- Catch all exceptions from HSM
+- Extract message with RemoveSpecialCharacters()
+- Return code 96 with sanitized error message
+
+## Security Considerations
+
+### PCI-DSS Compliance
+- All production PIN operations via HSM
+- No clear-text PIN logging
+- PIN block always encrypted (DUKPT or KWP)
+
+### Key Storage
+- Keys stored in encrypted XML containers (Atalla format)
+- Loaded into memory at startup: InitializeSettings()
+- File-based storage (not Azure Key Vault or similar)
+
+### Cryptographic Utilities Used
+- `CausalNexus.Runtime.Security.Crypto.PINBlock` - PIN block format handling
+- `CausalNexus.Runtime.Security.Crypto.DESUtility` - Test mode DES encryption
+- `CausalNexus.Runtime.Security.Data.Hex` - Hex string/byte conversion
+- `CausalNexus.Runtime.Security.Data.AtallaKeyBlockContainer` - Key file parsing
+
+## Integration Points
+
+### Upstream Consumers
+- Any CausalNexus module routing to "PinTranslation" destination
+- Likely: Realtime Switch, OmniSocket, WebMerchant modules
+- Message routing via CommonMessageContainer with TagDestination
+
+### Downstream Dependencies
+- Thales HSM (TCP connection, port unknown)
+- PinTranslationAccess database (SQL Server assumed)
+- Configuration files (JSON + XML keys)
+
+### Peer Services
+- ModuleJsonSourceNode: Response routing
+- ModuleMessageLogger: Audit logging
+
+## Database Schema
+
+**Tables** (inferred from Access methods):
+- Terminal mapping table with columns:
+  - TerminalId (string key)
+  - BdkId (string)
+
+**Operations**:
+- GetTerminalBdk: SELECT
+- SetTerminalBdk: INSERT/UPDATE
+- DeleteTerminal: DELETE
+
+## Technical Debt & Risks
+
+### EOL Runtime
+- .NET Core 2.2 reached end-of-life December 2019
+- Security patches no longer available
+- Migration to .NET 6.0+ required
+
+### Configuration Management
+- File-based key storage (manual management)
+- No key rotation automation
+- No centralized key management (Azure Key Vault, etc.)
+
+### HSM Dependency
+- Single HSM provider (no failover mentioned)
+- Thales-specific implementation (vendor lock-in)
+- HSM connection resilience not visible in code
+
+### Framework Coupling
+- Tight coupling to CausalNexus framework
+- Proprietary message passing (CommonMessageContainer)
+- Migration complexity for next-gen platform
+
+## Pattern Extraction for Next-Gen Platform
+
+### Patterns Identified:
+1. **HSM Integration Pattern**: Provider abstraction with factory
+2. **Key Management Pattern**: File-based configuration with hot-reload
+3. **Dynamic Discovery Pattern**: Automatic BDK identification with persistence
+4. **Test Mode Pattern**: Development/production separation
+5. **Audit Pattern**: Dual message emission (response + logger)
+
+### Potential Next-Gen Technologies:
+- Azure Key Vault / AWS KMS: Replace file-based key storage
+- Azure Payment HSM / AWS CloudHSM: Cloud HSM providers
+- .NET 8+: Modern runtime with performance improvements
+- OpenTelemetry: Standardized observability
+- gRPC: Modern service-to-service communication
+
+## Questions for Further Analysis
+
+1. What is the HSM connection configuration? (IP, port, credentials)
+2. Is there HSM failover or redundancy?
+3. What is the database schema for PinTranslationDatabase?
+4. How are keys initially injected into HSM and file system?
+5. What is the key rotation process?
+6. Are there performance metrics (TPS, latency)?
+7. How is this service deployed and monitored?
+8. What are the disaster recovery procedures?
+
+## Related Components
+
+- **Realtime Switch**: Likely consumer of PIN translation services
+- **OmniSocket**: POS gateway with DUKPT terminals
+- **HSM Service**: Referenced in Realtime docs (Port 1500) - may be same HSM
+
+## Session Notes
+
+**Analysis Date**: 2025-11-02
+**Codebase Location**: C:\_development\Massmart\PinTranslationService
+**Files Read**:
+- PinTranslation.cs (full)
+- PinTranslationSettings.cs (full)
+- PinTranslateRequest.cs (full)
+
+**Status**: Initial exploration complete, stub artifact created
+**Next Steps**:
+- Analyze PinTranslationAccess database layer
+- Map integration points with Realtime/OmniSocket
+- Document HSM configuration details
+- Update pattern library with cryptographic patterns

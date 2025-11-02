@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # Reconciliation Service - Business & Architectural Overview
 
@@ -607,4 +607,5 @@ Reconciliation Service provides automated transaction reconciliation and financi
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+

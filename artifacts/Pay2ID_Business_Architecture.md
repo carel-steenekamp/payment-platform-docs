@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # Pay2ID Batch Payment Processing - Business & Architectural Overview
 
@@ -601,4 +601,5 @@ Pay2ID provides batch payment processing for TymeBank Pay2ID disbursements with 
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+

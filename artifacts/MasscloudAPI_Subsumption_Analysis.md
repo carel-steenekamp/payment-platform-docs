@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # MasscloudAPI Subsumption Analysis
 
@@ -365,4 +365,5 @@ MasscloudAPI is a custom payment gateway built for Massmart retail operations us
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+

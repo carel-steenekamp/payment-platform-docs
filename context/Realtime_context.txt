@@ -1,0 +1,85 @@
+# Realtime (NexusV4) Analysis Context
+
+## Component Overview
+Central transaction orchestration switch connecting multiple merchant channels to multiple supplier APIs. Message-driven architecture with plugin-based module system.
+
+**Version**: NexusV4
+**Platform**: .NET 9.0 Windows Service
+**Deployment**: On-premises or cloud-hosted
+**Codebase**: C:\_development\NexusV4\Realtime
+
+## Key Architecture
+
+**Plugin Pattern** (Invocations.cs):
+- Declarative module routing: `ModuleInvocation<TModule>(OutputTo<TTarget>)`
+- Bidirectional: Merchant → Supplier, Supplier → Merchant (responses)
+- 5 merchant modules, 14+ supplier modules
+
+**Foundation Framework**:
+- **BaseMerchant<T>**: Inbound protocol handlers
+- **BaseSupplier<T>**: Outbound API clients with timer-driven operations
+- **Context**: Universal transaction object with routing, state, payloads
+
+**Resilience**:
+- Store-and-Forward (database-backed, 60s retry intervals)
+- Circuit breakers (per-supplier failure isolation)
+- Supplier status monitoring (health checks)
+- Active-Active HA (dual nodes with replication)
+
+## Office Service (Credit Management)
+
+**Location**: Realtime/Nexus/Office/
+**Purpose**: gRPC service for merchant credit management and voucher operations
+**Port**: 55200
+
+**gRPC Services** (officeservice.proto):
+- `UpdateBalance(merchantId, amount)`: Debit/credit merchant balance (lines 4)
+- `PostVoucher(voucher)`: Store voucher (line 5)
+- `GetVoucher(barcode, merchant, supplier)`: Retrieve voucher (line 6)
+- `PutVoucher(voucher)`: Update voucher (line 7)
+
+**UpdateBalance Implementation** (OfficeServices.cs:10-52):
+1. Parse and validate merchant ID
+2. Retrieve merchant from database
+3. Calculate new balance: `merchant.Balance + amount` (negative for debit)
+4. Check insufficient funds: `if (newBalance < 0) return InsufficientFunds`
+5. Update database and send alert if threshold reached
+6. Return outcome: Success, InvalidMerchant, or InsufficientFunds
+
+**OfficeClient Usage** (Shared/Foundation/NexusOffice/OfficeClient.cs:37-63):
+```csharp
+// Supplier modules call this before transactions
+var amount = isDebit ? -transactAmount : transactAmount;
+var success = await UpdateBalance(merchantId, amount);
+
+// If supplier fails, reverse the debit
+await UpdateBalance(merchantId, -amount);  // Credit back
+```
+
+**MerchantAlerter** (Shared/Foundation/Notifications/MerchantAlert/):
+- Email alerts when balance thresholds reached
+- Configurable templates and thresholds
+- Integrated with OfficeService
+
+## Code Locations
+
+- **Realtime/Nexus/Switch/Invocations.cs** (26-63): Routing configuration
+- **Realtime/Nexus/Office/OfficeServer/OfficeServices.cs** (10-52): gRPC service implementation
+- **Shared/Foundation/NexusOffice/OfficeClient.cs** (37-63): gRPC client wrapper
+- **Shared/Foundation/NexusOffice/Protos/officeservice.proto**: gRPC contract
+- **Shared/Foundation/NexusMerchant/BaseMerchant.cs**: Merchant base class
+- **Shared/Foundation/NexusSupplier/BaseSupplier.cs**: Supplier base class with timers
+- **Shared/Foundation/DbContext/Context.cs**: Universal transaction object
+- **Shared/Foundation/DbContext/SafManager.cs**: SAF management
+- **Shared/Foundation/Library/CircuitBreaker.cs**: Circuit breaker implementation
+- **Realtime/Supplier/Flash/FlashModule.cs**: Example supplier integration (58 product/transaction combinations)
+
+## Strategic Value
+
+Demonstrates central orchestration patterns:
+- Plugin architecture for rapid supplier onboarding
+- Message-driven asynchronous communication
+- Transaction lifecycle state machine
+- Comprehensive resilience (SAF, circuit breakers, HA)
+- Timer-driven automated operations
+- Hot-reload configuration

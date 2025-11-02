@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # FSCA Verification - Business & Architectural Overview
 
@@ -752,4 +752,5 @@ FSCA Verification is a regulatory compliance verification system that scrapes th
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+

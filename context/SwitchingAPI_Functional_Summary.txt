@@ -1,0 +1,911 @@
+# SwitchingAPI - Functional Summary
+
+## Executive Summary
+
+### What It Does
+SwitchingAPI is a Java-based abstraction layer that provides Massmart retail POS systems with a unified interface for processing both Electronic Funds Transfer (EFT) and Value-Added Services (VAS) transactions. It routes traditional card payments through Postilion's eSocket.POS while directing digital payment services (airtime, electricity, bill payments, lotto) through Electrum and Mercurius VAS platforms.
+
+### Why It's Needed
+Massmart operates multiple retail chains (Makro, Game, Builders, etc.) each with POS systems requiring access to both traditional payment networks and modern digital services. Without SwitchingAPI, each POS vendor would need to integrate separately with multiple payment providers, maintain different SDKs, and handle protocol translations. SwitchingAPI solves this by:
+
+- **Abstracting Complexity**: POS developers interact with a single, consistent Java API regardless of which payment network processes the transaction
+- **Enabling Multi-Tenancy**: Different chains can use different provider configurations while sharing the same API codebase
+- **Ensuring Reliability**: Built-in Store-and-Forward (SAF) capabilities with H2 database queuing ensure transactions aren't lost during network outages
+- **Simplifying Operations**: Centralized reconciliation, logging, and configuration management across all chains and stores
+
+### Key Benefits
+1. **Single Integration Point**: POS systems call one API for all payment types (EFT, VAS, accounts)
+2. **Provider Flexibility**: Swap between ESP, Electrum, Mercurius, or composite providers via configuration
+3. **Resilience**: Automatic SAF queuing with retry logic for both EFT and VAS transactions
+4. **Chain-Specific Logic**: MDD store translation, Makro datetime requirements, BlackHawk gift card handling
+5. **Compliance Ready**: Automated reconciliation with Causal Nexus Recon Service for daily settlement
+6. **PIN Security**: Optional PIN Translation Service (PTS) integration for money transfer operations
+7. **Browser Integration**: Kinektek Browser Agent integration for heavy VAS products requiring customer interaction
+
+### Role in Causal Nexus Payments Platform
+
+SwitchingAPI serves as the **Edge Integration Layer** in Massmart's payments architecture, demonstrating proven patterns for:
+
+- **Multi-Provider Routing**: Type-based transaction routing (EFT vs VAS vs Account)
+- **Protocol Translation**: JSON ↔ eSocket.POS XML, Bean ↔ Electrum JSON, Bean ↔ Mercurius JSON
+- **Store-and-Forward Resilience**: Database-backed queuing with scheduled retry processors
+- **Chain-Specific Adaptations**: MDD store code translation, Makro validation rules, BlackHawk barcode parsing
+- **Reconciliation Integration**: Automated trickle-feed to centralized recon service
+- **Configuration Management**: Properties-driven provider selection and endpoint configuration
+
+**Strategic Value**: SwitchingAPI represents operational knowledge about retail payment edge cases, chain-specific requirements, and battle-tested resilience patterns that should inform next-generation platform design.
+
+---
+
+## Core Function
+
+SwitchingAPI is a **provider-agnostic payment gateway library** that routes transaction requests from Massmart POS systems to the appropriate payment processor based on transaction type:
+
+```
+POS Application
+      ↓
+ISwitchingApi Interface (Bean-based API)
+      ↓
+SwitchingApiShell (Request normalization, MDD translation, BlackHawk handling)
+      ↓
+Provider Selection (via core.type config)
+      ↓
+┌─────────────────┬──────────────────┬──────────────────┬───────────────────┐
+│  eSocketProvider│ ElectrumProvider │ MercuriusProvider│ Composite Providers│
+│  (Pure EFT)     │ (VAS + EFT)      │ (VAS via ESP)    │ (Makro variants)   │
+└─────────────────┴──────────────────┴──────────────────┴───────────────────┘
+         ↓                  ↓                  ↓                    ↓
+   eSocket.POS         Electrum           Mercurius         Mixed Routing
+  (Postilion XML)    (JSON via ESP)    (JSON via ESP)    (Electrum + Mercurius)
+         ↓                  ↓                  ↓                    ↓
+   Postilion          VAS Network        VAS Network         Combined Networks
+  Payment Switch      (Airtime, etc)    (Bill Pay, etc)
+```
+
+---
+
+## Architecture Components
+
+### 1. API Interface Layer
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/`
+
+**Key Classes**:
+- `ISwitchingApi.java` (lines 1-181): Main interface defining 18 transaction methods
+- `SwitchingApiShell.java` (lines 1-983): Implementation wrapper with pre/post processing
+
+**Transaction Categories Supported**:
+- **EFT Transactions**: Purchase, Refund, Load (gift cards), Balance, Reversals, Adjustments
+- **Virtual Goods**: Airtime (FIXED, VARIABLE, PINLESS), Lotto wagers
+- **Bill Payments**: Query, Sale, Completion (DSTV, Water, Municipal)
+- **Utilities**: Electricity (Query, Sale, Reprint, Completion)
+- **Heavy Products**: Browser-based VAS with product creation, sale, refund workflows
+- **Virtual Accounts**: Request, Redeem, Refund operations (provision + completion)
+- **Account Transactions**: Rewards, debtor accounts (non-card payments)
+
+**Key Responsibilities**:
+- Provider lifecycle management (`open()`, `close()`)
+- Request validation and default population (chain, store, terminalId, dateTime)
+- MDD store code translation (1987 → G987, 2987 → D987) - lines 912-954
+- BlackHawk gift card barcode parsing (PSDData → PAN extraction) - lines 760-789
+- UTI (Unique Transaction Identifier) generation - lines 900-903
+- Approval source classification (offline, source, floor limit, system) - lines 844-898
+
+### 2. Provider Framework
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/provider/`
+
+**Provider Enum** (`SwitchingProviderEnum.java`):
+```java
+ESP              → eSocketProvider                    // Pure EFT via eSocket.POS
+ELECTRUM         → ElectrumProvider                   // VAS via Electrum + EFT
+MERCURIUS        → MercuriusProvider                  // VAS via Mercurius + EFT
+MAKRO_ELECTRUM   → MakroElectrumMercuriusProvider    // Electrum VAS + Mercurius Accounts
+SIMPLE           → SimpleSimProvider                 // Test simulator
+```
+
+**Provider Hierarchy**:
+```
+ISwitchingProvider (interface)
+    ↓
+BaseProvider (common utilities)
+    ↓
+eSocketProvider (lines 1-38: eSocket.POS integration)
+    ↓
+    ├── ElectrumProvider (lines 1-23: extends ESP, adds VAS via Electrum JSON)
+    │       ↓
+    │       └── MakroElectrumMercuriusProvider (lines 1-31: routes accounts to Mercurius)
+    │
+    └── MercuriusProvider (lines 1-39: extends ESP, adds VAS via Mercurius JSON)
+```
+
+**Key Features**:
+- **Server Mode vs Embedded Mode**: ESP can run as centralized server or embedded per-terminal
+- **Dynamic Provider Loading**: Class instantiation via reflection based on config
+- **Inheritance-Based Composition**: Providers extend ESP to reuse EFT logic while adding VAS
+
+### 3. EFT Integration (eSocket.POS)
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/provider/esp/`
+
+**Core Class**: `eSocketProvider.java` (lines 1-38+)
+
+**Integration Pattern**:
+```java
+EFTTransactionBean (SwitchingAPI) → EspTransaction (eSocket.POS) → Postilion Switch
+```
+
+**Responsibilities**:
+- eSocket.POS lifecycle: `initStoreServer()` or `initTerminal()` - lines 121-139
+- Configuration management: ESP properties, template files, CA config - lines 141-200
+- Database management: HSQLDB/H2 for terminal data, optional rebuild - lines openRebuildDatabase()
+- Event processing: `EspEventProcessor` for asynchronous ESP events
+- Transaction mapping: `MsgMapEsp` converts beans to ESP transaction objects
+- Response code handling: `ResponseCodeEnum`, `MessageReasonCodeEnum`
+
+**ESP Configuration** (from `switchingapi.properties`):
+- `esp.config.file`: eSocket.POS configuration file path
+- `esp.template.file`: Template for terminal-specific configs
+- `esp.ca.config.file`: Configuration Agent settings
+
+### 4. VAS Integration (Electrum)
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/provider/electrum/`
+
+**Core Class**: `ElectrumProvider.java` (lines 1-23+)
+
+**Transaction Types Supported**:
+- **Virtual Goods**: Airtime, data bundles, pinless recharge
+- **Lotto**: Wager requests, confirmations, reversals
+- **Electricity**: Prepaid electricity tokens
+- **Gift Cards**: Balance checks, loads, redemptions
+
+**Protocol Translation**:
+```java
+VirtualGoodsSaleBean → ElectrumUtil.createVirtualGoodsSale()
+                    → JSON payload → EspMerchandise.Type.REQUEST
+                    → eSocket.POS.privateDa (embedded JSON)
+                    → Electrum Service
+```
+
+**Service Types**:
+- `AIRTIME` / `VOUCHER_REQUEST`: Virtual goods purchases
+- `LOTTO` / `WAGER_REQUEST`: Lotto wagers
+- Services wrapped in ESP Merchandise transactions with JSON in privateData field
+
+**Key Features**:
+- Tender apportionment (`MassmartTender.apportionTenders()`) - lines 91-92
+- Validation before transmission - lines 99-107
+- RED (Recon/Event Data) tracking - line 110
+- Kinektek Browser Agent integration for heavy products - lines 73-84
+- Receiving Institute Code configuration (1001=DEV, 1002=PROD) - lines 39-46
+
+### 5. VAS Integration (Mercurius)
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/provider/mercurius/`
+
+**Core Class**: `MercuriusProvider.java` (lines 1-39+)
+
+**Transaction Types Supported**:
+- **Bill Payments**: Query, Sale, Completion (DSTV, Water, Municipal, Insurance)
+- **Electricity**: Prepaid electricity with meter validation
+- **Account Transactions**: Rewards programs, debtor accounts
+
+**Protocol Translation**:
+```java
+BillPaymentSaleBean → MercuriusUtil.createBillPaymentSale()
+                   → MBPSaleMsg (Mercurius message format)
+                   → MercuriusJson.toJson()
+                   → EspMerchandise (wrapped in ESP)
+                   → Mercurius Service
+```
+
+**Message Types**:
+- `MVASTypeEnum`: BILL_PAYMENT, ELECTRICITY, ACCOUNT, etc.
+- `MVASFunctionEnum`: QUERY, SALE, COMPLETION, REVERSAL
+- `MercuriusJson`: Jackson-based JSON serialization
+- `MercuriusUtil`: Bean ↔ Mercurius message conversion
+
+**Validation**:
+- Pre-flight validation via `Validator` class - lines 59-67
+- Field-level validation rules in Mercurius common library
+- Validation errors mapped to SwitchingAPI response codes - lines 63-66
+
+### 6. Store-and-Forward (SAF)
+**Location**: `com/causalnexus/reconciliation/`
+
+**Core Classes**:
+- `ReconSafProcessor.java` (lines 1-150): Scheduled processor for queued messages
+- `ReconDAO.java`: H2 database operations
+- `ReconMessageSaf.java`: SAF record entity
+
+**SAF Architecture**:
+```
+Transaction Failed → ReconDAO.insertReconEntry()
+                         ↓
+                   H2 Database (reconsaf table)
+                         ↓
+            ReconSafProcessor (every 10 seconds)
+                         ↓
+             Fetch 50 oldest records → Send to Recon Service
+                         ↓
+        Success: Delete record | Failure: Retry next cycle
+```
+
+**Key Features**:
+- **Scheduled Retry**: `ScheduledExecutorService` runs every 10 seconds - line 36
+- **Batch Processing**: Processes 50 records per cycle - line 30
+- **Automatic Cleanup**: Successful sends delete SAF record - lines 83-85
+- **Network Resilience**: Catches `SocketTimeoutException` and continues - lines 87-88
+- **Reconciliation Integration**: Sends `RequestFrame` to Causal Nexus Recon Service - lines 108-121
+
+**Database Migration**: Flyway-based (`V1.0.0__CreateReconSafTable.sql`)
+
+### 7. PIN Translation Service (PTS)
+**Location**: `com/causalnexus/moneytransfer/pintranslation/`
+
+**Purpose**: Securely translates customer PINs for money transfer operations
+
+**Components**:
+- `PinContext`: Thrift-based connection management to PTS service
+- `PinTranslationMessageBuilder`: Builds ISO-8583 style PIN translation requests
+- `PipelineMoneyTransferPin`: Orchestrates PIN capture and translation workflow
+- `ServiceEndpoint`: TCP socket communication with PTS
+
+**Configuration** (from `switchingapi.properties`):
+```properties
+pts.active = true/false
+pts.1.address = 10.20.2.22
+pts.1.port = 50505
+pts.2.address = 10.20.2.22  # Redundant endpoint
+pts.2.port = 50505
+```
+
+**Security**:
+- No PIN values stored or logged in SwitchingAPI
+- PIN blocks transmitted encrypted to PTS
+- PTS performs HSM-based PIN translation
+
+### 8. Browser Agent (Kinektek)
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/provider/kinektek/`
+
+**Purpose**: Manages Kinektek Browser Agent (MCB) for heavy VAS products requiring customer interaction
+
+**Core Class**: `KinektekProvider.java`
+
+**Use Cases**:
+- Showmax/Netflix subscription sign-ups
+- Large voucher purchases requiring terms acceptance
+- Multi-step product configurations
+- Customer consent workflows
+
+**Integration Points**:
+- `HeavyCreateProductBean`: Initialize browser session
+- `HeavySaleBean`: Execute heavy product sale via browser
+- `HeavyCompletionBean`: Finalize or reverse browser transaction
+- `closeBrowserAgent()`: Terminate browser session - ISwitchingApi line 178
+- `getBrowserAgentStatus()`: Check MCB availability - ISwitchingApi line 180
+
+**Configuration**:
+```properties
+mcb.host = localhost
+mcb.port = 9090
+pos.type = UNSPECIFIED
+pos.version = 1.0
+```
+
+### 9. Message Definitions
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/msg/`
+
+**Base Classes**:
+- `EFTBaseBean`: Common fields (chain, store, terminalId, dateTime, responseCode, etc.)
+- `VASBaseBean`: VAS-specific fields (partnerId, reversible, vouchers, structured data)
+
+**Transaction Types**:
+
+**EFT** (`EFTTransactionBean`):
+- `EFTTransactionTypeEnum`: PURCHASE, REFUND, LOAD, BALANCE, REVERSALS, ADJUSTMENTS
+- `EFTEntryModeEnum`: SWIPE, CHIP, CONTACTLESS, MANUAL, FALLBACK
+- `EFTMerchandiseBean`: Merchandise data for gift card transactions
+- `AccountTypeEnum`: SAVINGS, CURRENT, CREDIT, UNIVERSAL
+
+**Virtual Goods** (`VirtualGoodsSaleBean`, `VirtualGoodsCompletionBean`):
+- `VirtualGoodsTypeEnum`: FIXED, VARIABLE, PINLESS, LOTTO (+ reversals)
+- `CompletionTypeEnum`: FINALIZE, CANCEL, REVERSAL
+- `ReversalReasonEnum`: TRANSACTION_DECLINED, CUSTOMER_CHANGED_MIND, etc.
+
+**Bill Payments** (`BillPaymentQueryBean`, `BillPaymentSaleBean`, `BillPaymentCompletionBean`):
+- `BillTypeEnum`: DSTV, WATER, MUNICIPAL, TRAFFIC_FINE, INSURANCE, PHONE
+- Query → Sale → Completion workflow
+
+**Utilities** (`UtilityQueryBean`, `UtilitySaleBean`, `UtilityCompletionBean`, `UtilityReprintBean`):
+- `UtilityTypeEnum`: ELECTRICITY (prepaid tokens)
+- `UtilityPurchaseEnum`: QUERY_ONLY, PURCHASE, REPRINT
+- `UtilityConsumer`: Customer meter details
+
+**Heavy Products** (`HeavyCreateProductBean`, `HeavySaleBean`, `HeavyCompletionBean`):
+- `HeavyModeEnum`: CREATE, SALE, COMPLETE, REPRINT, REFUND
+- `HeavyBrowserStatusEnum`: AVAILABLE, UNAVAILABLE, UNKNOWN
+- `HeavyProduct`: Product definition with structured data
+
+**Virtual Accounts** (`VirtualAccount*ProvisionBean`, `VirtualAccount*CompletionBean`):
+- `VirtualAccountTransactionTypeEnum`: REQUEST, REDEEM, REFUND
+- Provision → Completion two-phase workflow
+
+**Common Enums**:
+- `ResponseEnum`: SUCCESS, DECLINED, ERROR, OFFLINE
+- `StatusEnum`: APPROVED, DECLINED, OFFLINE, PENDING
+- `ApprovalSourceEnum`: SYSTEM, OFFLINE_APPROVAL, SOURCE_APPROVED, BELOW_FLOOR_LIMIT
+- `TenderTypeEnum`: CASH, CARD, VOUCHER, ACCOUNT
+
+**Structured Data**:
+- `Voucher`: Multi-line voucher support (pin, serial, instructions, expiry)
+- `VoucherLine`: Individual voucher line item
+- `Tender`: Multi-tender support (split payments)
+- `Receiver`: Beneficiary details for money transfers
+
+### 10. Validation Framework
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/validation/`
+
+**Core Classes**:
+- `Validator.java`: Validation engine
+- `ValidationResponse.java`: Validation result container
+- `ValidationUtils.java`: Utility methods
+- `NumberValidationUtils.java`: Account/meter number validators
+
+**Validators**:
+- `AARTOValidator`: Traffic fine numbers (AARTO system)
+- `EasyPayNumberValidator`: EasyPay reference numbers
+- `ElectricityMeterNumberValidator`: Prepaid electricity meter numbers (20-digit)
+- `TraficNoticeValidator`: Traffic notice validation
+
+**Validation Flow**:
+```java
+BillPaymentSaleBean.validateRequest() → ValidationResponse
+    ├── Check required fields
+    ├── Validate field formats
+    ├── Run type-specific validators
+    └── Return validation result (passed/failed + items)
+```
+
+**API Methods**:
+- `ISwitchingApi.validateBillPaymentAccountNo()` - line 166
+- `ISwitchingApi.validateUtilityMeterNo()` - line 168
+
+### 11. Utilities
+**Location**: `src/main/java/za/co/ucs/instore/pos/switchingapi/utils/`
+
+**Key Utilities**:
+- `BlackHawkFuncs.java`: BlackHawk gift card barcode parsing (32-char format)
+- `LuhnCheck.java`: Luhn algorithm for card number validation
+- `VerhoeffCheckSum.java`: Verhoeff algorithm for check digit validation
+- `PanProtect.java`: PAN masking for logging (show first 6, last 4)
+- `UCal.java`, `UDateTime.java`: Calendar/datetime utilities
+- `UMoney.java`: Money formatting (long cents ↔ decimal)
+- `Parser.java`: String parsing utilities
+- `Dump.java`: Object dumping for debugging
+- `OS.java`: OS detection and platform utilities
+
+**Chain-Specific**:
+- `RCSUtil.java`: RCS-specific logic
+- `TutukaUtil.java`: Tutuka integration helpers
+
+### 12. Reconciliation Models
+**Location**: `com/causalnexus/reconciliation/models/`
+
+**Message Structures**:
+- `ReconMessagePayload`: Transaction data for reconciliation
+  - `MessageClassEnum`: REQUEST, RESPONSE, NOTIFICATION
+- `RequestFrame`: SAF message wrapper (address, terminal, service, type, mode, data, responseCode)
+- `ResponseFrame`: Recon service response
+- `Tuple`: Key-value pair for flexible data
+- `WhitelistedEftBins`: EFT BIN whitelist for reconciliation filtering
+
+**Serialization**: Jackson JSON (`Serializer.java`)
+
+---
+
+## Key Capabilities
+
+### 1. Multi-Provider Support
+- **Configuration-Driven**: Change payment provider via `core.type` property
+- **Inheritance-Based**: Providers extend base functionality (ElectrumProvider extends eSocketProvider)
+- **Composite Providers**: Makro uses Electrum for VAS + Mercurius for accounts
+
+### 2. Transaction Lifecycle Management
+- **Two-Phase Transactions**: Query → Sale, Provision → Completion patterns
+- **Reversals**: Automatic and manual reversal support with reason codes
+- **Completions**: Finalize, cancel, or reverse pending transactions
+
+### 3. Network Resilience
+- **Store-and-Forward**: H2 database queuing with 10-second retry cycles
+- **Timeout Handling**: Configurable timeouts per transaction type
+- **Automatic Retry**: Failed SAF messages retried until success
+
+### 4. Chain-Specific Adaptations
+- **MDD Store Translation**: Numeric codes translated to alphanumeric (1987 → G987)
+- **Makro DateTime Validation**: Requires POS to pass transaction datetime (line 749-757)
+- **BlackHawk Handling**: Automatic PAN extraction from barcode data (lines 760-789)
+
+### 5. Security & Compliance
+- **PAN Protection**: Automatic masking in logs
+- **PIN Translation**: Secure PIN handling via PTS
+- **Approval Source Tracking**: Offline vs online approval classification
+- **Audit Trail**: Comprehensive logging via log4j
+
+### 6. Operational Features
+- **Server Mode**: Centralized ESP server for multi-terminal deployments
+- **Embedded Mode**: Per-terminal ESP instance for standalone POS
+- **Hot Configuration**: Configuration daemon for runtime updates
+- **Version Management**: Built-in version tracking (0.5.2)
+
+---
+
+## Message Flow
+
+### Standard EFT Purchase Flow
+```
+POS Application
+    ↓ [EFTTransactionBean: PURCHASE, amount=10000]
+SwitchingApiShell
+    ↓ [Populate defaults, validate, generate UTI]
+eSocketProvider
+    ↓ [Convert to EspTransaction]
+eSocket.POS SDK
+    ↓ [ISO-8583 message via Postilion protocol]
+Postilion Payment Switch
+    ↓ [Route to acquiring bank]
+Card Scheme (Visa/Mastercard)
+    ↓ [Authorize with issuer]
+← Response [responseCode=00, authCode=123456]
+← eSocket.POS [EspTransaction with approval]
+← eSocketProvider [Convert to EFTTransactionBean]
+← SwitchingApiShell [Populate approval source, mask PAN]
+← POS Application [Display approval, print slip]
+```
+
+### Virtual Goods (Electrum) Flow
+```
+POS Application
+    ↓ [VirtualGoodsSaleBean: FIXED airtime, amount=10000, msisdn=0821234567]
+SwitchingApiShell
+    ↓ [Populate defaults, MDD translation if needed]
+ElectrumProvider
+    ↓ [Tender apportionment, validation]
+    ↓ [ElectrumUtil.createVirtualGoodsSale() → JSON]
+eSocketProvider (inherited)
+    ↓ [Wrap JSON in EspMerchandise.privateData]
+eSocket.POS SDK
+    ↓ [Merchandise transaction to Electrum]
+Electrum Service
+    ↓ [Generate voucher, process with supplier]
+← Response [Voucher: PIN=123456789012, Serial=987654321, Expiry]
+← EspMerchandise [JSON in privateData]
+← ElectrumProvider [ElectrumUtil.parseVirtualGoodsSale()]
+← SwitchingApiShell [Return VirtualGoodsSaleBean with voucher]
+← POS Application [Print voucher slip]
+
+If transaction fails:
+    ↓ [Store in SAF via ReconDAO]
+    ↓ [ReconSafProcessor retries every 10 seconds]
+    ↓ [Send to Causal Nexus Recon Service for settlement]
+```
+
+### Bill Payment (Mercurius) Flow
+```
+POS Application - Query Phase
+    ↓ [BillPaymentQueryBean: DSTV, accountNo=123456789]
+MercuriusProvider
+    ↓ [Create MBPQueryMsg, validate]
+    ↓ [Serialize to JSON via MercuriusJson]
+eSocket.POS (inherited)
+    ↓ [Wrap in EspMerchandise]
+Mercurius Service
+    ↓ [Query account balance with DSTV]
+← Response [accountName=John Doe, amountDue=89900]
+← MercuriusProvider [Parse MBPQueryMsg, populate bean]
+← POS Application [Display amount due, get confirmation]
+
+POS Application - Sale Phase
+    ↓ [BillPaymentSaleBean: DSTV, accountNo, amount=89900, tenders]
+MercuriusProvider
+    ↓ [Create MBPSaleMsg with tender details]
+Mercurius Service
+    ↓ [Process payment with DSTV]
+← Response [receiptNo=987654321, confirmationCode=ABC123]
+← POS Application [Print payment receipt]
+
+POS Application - Completion Phase
+    ↓ [BillPaymentCompletionBean: FINALIZE]
+MercuriusProvider
+    ↓ [Create MBPCompletionMsg]
+Mercurius Service
+    ↓ [Finalize transaction]
+← Response [Transaction complete]
+```
+
+### Heavy Product (Browser Agent) Flow
+```
+POS Application
+    ↓ [HeavyCreateProductBean: Create Showmax subscription]
+KinektekProvider
+    ↓ [Check browser agent status]
+    ↓ [Initialize browser session]
+Browser Agent (MCB)
+    ↓ [Launch browser, load product page]
+Customer Interaction
+    ↓ [Select plan, enter details, accept T&Cs]
+POS Application
+    ↓ [HeavySaleBean: Process sale]
+KinektekProvider
+    ↓ [Submit via ElectrumProvider]
+Electrum Service
+    ↓ [Process subscription activation]
+← Response [Subscription active, reference number]
+← POS Application [Print confirmation]
+POS Application
+    ↓ [HeavyCompletionBean: FINALIZE]
+← Browser session closed
+```
+
+---
+
+## Deployment Model
+
+### Embedded Mode (Typical)
+```
+POS Application Process
+    └── SwitchingAPI Library (JAR)
+        └── eSocket.POS Embedded
+            └── Local HSQLDB/H2
+```
+
+**Use Case**: Single-terminal POS installations
+**Configuration**: Per-terminal ESP config file
+
+### Server Mode (Enterprise)
+```
+Central SwitchingAPI Server
+    └── eSocket.POS Server
+        └── Centralized H2 Database
+
+POS Terminal 1 ─┐
+POS Terminal 2 ─┼─→ TCP Connection → SwitchingAPI Server
+POS Terminal 3 ─┘
+```
+
+**Use Case**: Multi-terminal deployments with centralized ESP management
+**Configuration**: `openServer()` method, terminals registered via `serverInitTerminal()`
+
+### Typical Massmart Deployment
+```
+Makro Store (10 POS terminals)
+    ├── POS Terminals 1-10: SwitchingAPI 0.5.2 (Embedded Mode)
+    │   ├── Provider: MAKRO_ELECTRUM (Electrum + Mercurius)
+    │   ├── EFT: eSocket.POS → Postilion
+    │   ├── VAS: Electrum → VAS Network
+    │   └── Accounts: Mercurius → Rewards System
+    └── Store Server
+        ├── Causal Nexus Recon Service (Port 50506)
+        └── PIN Translation Service (Port 50505)
+
+Game Store (8 POS terminals)
+    ├── POS Terminals 1-8: SwitchingAPI 0.5.2
+    │   ├── Provider: ELECTRUM
+    │   ├── EFT + VAS: Via Electrum
+    │   └── Different receivingInstituteCode than Makro
+    └── Store Server (same services)
+```
+
+---
+
+## Integration Points for Next-Gen Platform
+
+### 1. Provider Abstraction Pattern
+- **Current**: `ISwitchingProvider` interface with pluggable implementations
+- **Next-Gen**: Extract pattern for microservices gateway with provider plugins
+
+### 2. Bean-Based Messaging
+- **Current**: Plain Java beans with Jackson JSON serialization
+- **Next-Gen**: Consider as basis for gRPC message definitions or REST DTOs
+
+### 3. Store-and-Forward
+- **Current**: H2 database with scheduled processor
+- **Next-Gen**: Replace with distributed queue (Kafka, RabbitMQ) while preserving retry logic
+
+### 4. Configuration Management
+- **Current**: Properties files per deployment
+- **Next-Gen**: Centralized config service (Spring Cloud Config, Consul)
+
+### 5. Reconciliation Integration
+- **Current**: Direct TCP socket to Causal Nexus Recon Service
+- **Next-Gen**: Event streaming to recon service via Kafka topics
+
+### 6. Multi-Tenancy
+- **Current**: Chain/Store parameters passed per transaction
+- **Next-Gen**: Extract multi-tenant routing patterns for cloud-native platform
+
+---
+
+## Technical Stack
+
+### Language & Framework
+- **Language**: Java 7 (maven.compiler.source=1.7)
+- **Build Tool**: Maven 3.x
+- **Packaging**: JAR library (SwitchingAPI-0.5.2.jar)
+
+### Core Dependencies
+- **eSocket.POS SDK**: Postilion payment switch integration (proprietary)
+- **Mercurius Commons** (0.0.7): VAS message definitions
+- **Electrum Client** (0.3.2): Electrum service integration
+- **Apache Thrift** (0.12.0): RPC framework for PTS
+- **Jackson** (2.10.2): JSON serialization
+- **Apache Commons Lang** (2.6): String utilities
+- **Apache Commons DBCP2** (2.4.0): Database connection pooling
+- **Log4j** (1.2.17): Logging
+- **Flyway** (4.2.0): Database migrations
+
+### Database
+- **H2** (1.4.200): Embedded SQL database for SAF
+- **HSQLDB** (2.3.4): Alternative embedded database (ESP)
+- **Schema**: Flyway migration `V1.0.0__CreateReconSafTable.sql`
+
+### Testing
+- **JUnit** (4.12): Unit testing framework
+- **Test Coverage**: Extensive test suites in `src/test/`
+  - `TestEFT.java`: EFT transaction tests
+  - `TestVirtualGoods.java`: Airtime, voucher tests
+  - `TestBillPayment.java`: Bill payment workflow tests
+  - `TestUtilities.java`: Electricity tests
+  - `TestHeavy.java`: Browser agent tests
+  - `TestLotto.java`: Lotto wager tests
+  - `AutoTest.java`: Automated test harness with JSON test cases
+
+### Integration Libraries
+- **BrowserAgentClient** (0.9875): Kinektek MCB integration (system scope)
+- **PostilionDependency** (2.0): Postilion SDK dependencies (system scope)
+- **javax.comm** (1.0): Serial communication (legacy, likely unused)
+
+---
+
+## Key Code Locations
+
+### Core API
+- **Main Interface**: `ISwitchingApi.java` (lines 1-181)
+- **Shell Implementation**: `SwitchingApiShell.java` (lines 1-983)
+- **Version**: `Version.java` (lines 8-9: "0.5.2")
+
+### Provider Selection
+- **Enum Definition**: `SwitchingProviderEnum.java` (lines 7-15: ESP, ELECTRUM, MERCURIUS, etc.)
+- **Provider Loading**: `SwitchingApiShell.java` (lines 73-84: load config, lines 109-134: instantiate provider)
+
+### Transaction Classification
+- **Type Detection**: Handled by POS application before calling appropriate API method
+- **No automatic routing**: POS explicitly calls `transaction()`, `virtualGoods()`, `billPayment()`, etc.
+
+### EFT Integration
+- **eSocket.POS Wrapper**: `eSocketProvider.java` (lines 38-200+)
+- **Server Mode Init**: `openServer()` (lines 44-66)
+- **Embedded Mode Init**: `open()` (lines 100-119)
+- **Configuration Loading**: `openReadConfig()` (lines 141-147)
+- **Database Management**: `EspDBManagerLinux.java`, `EspDBManagerServer.java`
+
+### VAS Routing
+- **Electrum Integration**: `ElectrumProvider.java`
+  - Virtual Goods: `virtualGoods(VirtualGoodsSaleBean)` (lines 87-158)
+  - Lotto: Same method with type check (line 117: LOTTO type)
+  - Utilities: `utility()` methods (inherited from ElectrumProvider)
+- **Mercurius Integration**: `MercuriusProvider.java`
+  - Bill Payments: `billPayment(BillPaymentQueryBean)` (lines 103-153)
+  - Electricity: Similar pattern via `utility()` methods
+  - Accounts: `account(AccountTransactionBean)` (lines 48-100)
+
+### Protocol Translation
+- **Electrum**: `ElectrumUtil.java`
+  - Request: `createVirtualGoodsSale()`, `createLottoWagerRequest()`
+  - Response: `parseVirtualGoodsSale()`, `hasFailedOrOffline()`
+- **Mercurius**: `MercuriusUtil.java`
+  - Request: `createBillPaymentQuery()`, `createBillPaymentSale()`
+  - Response: `populateResponse()`
+  - JSON: `MercuriusJson.toJson()`, `MercuriusJson.parseBillPaymentQuery()`
+- **ESP Mapping**: `MsgMapEsp.java` (EFTTransactionBean ↔ EspTransaction)
+
+### Chain-Specific Logic
+- **MDD Translation**: `SwitchingApiShell.java`
+  - Request: `translateMddStoreRequest()` (lines 912-932)
+  - Response: `translateMddStoreResponse()` (lines 934-954)
+- **Makro DateTime**: `fixDefaults()` (lines 749-757: throws exception if null)
+- **BlackHawk**: `fixForBlackHawk()` (lines 760-789: parse barcode_C128)
+
+### Store-and-Forward
+- **SAF Processor**: `ReconSafProcessor.java`
+  - Scheduler: Constructor (lines 32-36: 10-second fixed rate)
+  - Batch Processing: `run()` (lines 61-96: fetch 50 records)
+  - Send Logic: `sendToRecon()` (lines 98-106)
+- **DAO**: `ReconDAO.java` (insert, fetch, delete operations)
+- **Entity**: `ReconMessageSaf.java` (database record structure)
+
+### Reconciliation
+- **Context**: `ReconContext.java` (connection management)
+- **Models**: `ReconMessagePayload.java` (transaction payload)
+- **Frames**: `RequestFrame.java`, `ResponseFrame.java` (message envelopes)
+- **Serialization**: `Serializer.java` (Jackson JSON)
+
+### PIN Translation
+- **Context**: `PinContext.java` (PTS connection via Thrift)
+- **Builder**: `PinTranslationMessageBuilder.java` (ISO-8583 style messages)
+- **Pipeline**: `PipelineMoneyTransferPin.java` (orchestration)
+- **Endpoint**: `ServiceEndpoint.java` (TCP communication)
+
+### Validation
+- **Entry Point**: `ISwitchingApi.validateBillPaymentAccountNo()` (line 166)
+- **Number Validation**: `NumberValidationUtils.java`
+  - Bill payment: `validateBillPaymentAccountNo()`
+  - Electricity: `validateElectricityMeterNo()`
+- **Validators**: `validators/` directory
+  - AARTO: `AARTOValidator.java`
+  - EasyPay: `EasyPayNumberValidator.java`
+  - Electricity: `ElectricityMeterNumberValidator.java`
+
+### Utilities
+- **BlackHawk**: `BlackHawkFuncs.java`
+  - `splitOutPan()`: Extract PAN from 32-char barcode
+  - `makeAccountType()`: Derive account type from PAN
+  - `makeExpiryDate()`: Generate expiry for gift cards
+- **PAN Protection**: `PanProtect.java` (mask PAN for logging)
+- **Validation**: `LuhnCheck.java`, `VerhoeffCheckSum.java`
+
+---
+
+## Version Information
+- **Current Version**: 0.5.2 (as of 2025-11-02)
+- **Platform**: Java 7+ (compiled for Java 7 compatibility)
+- **Deployment**: JAR library embedded in POS applications
+- **Build**: Maven-based (`pom.xml`)
+
+### Recent Changes (from git log)
+- **0.5.2**: Fix for null SD (Structured Data) list
+- **0.5.1**: Prior version
+- **Features**: QR code support, JUnit test migrations
+
+---
+
+## Technical Debt / Observations
+
+1. **Java 7 Compatibility**: Targeting very old Java version (2011), limits modern language features
+2. **System-Scoped Dependencies**: Several JARs in `libs/` directory, not in Maven Central
+3. **Mixed Logging**: log4j 1.2.17 (very old, EOL), should migrate to log4j2 or slf4j
+4. **Embedded Database**: H2 1.4.200 has known CVEs, should upgrade
+5. **Jackson Version**: 2.10.2 is several years old
+6. **No Circuit Breaker**: Direct fail-fast approach, no Hystrix/Resilience4j patterns
+7. **Synchronous Processing**: All transaction calls are blocking
+8. **Single-Threaded SAF**: ReconSafProcessor uses single thread, potential bottleneck
+9. **Hard-Coded Timeouts**: No externalized timeout configuration visible
+10. **ESP Dependency**: Tight coupling to Postilion eSocket.POS SDK
+
+---
+
+## Architectural Patterns
+
+### 1. Strategy Pattern
+**Provider Selection**: `SwitchingProviderEnum` + dynamic class loading
+```java
+ISwitchingProvider provider = (ISwitchingProvider) Class.forName(
+    switchingProviderType.getClazz()
+).newInstance();
+```
+
+### 2. Template Method Pattern
+**Base Provider**: `BaseProvider` defines common utilities, subclasses implement specifics
+
+### 3. Adapter Pattern
+**Protocol Translation**: Each provider adapts SwitchingAPI beans to native protocol
+- `ElectrumUtil`: Beans → Electrum JSON
+- `MercuriusUtil`: Beans → Mercurius JSON
+- `MsgMapEsp`: Beans → EspTransaction objects
+
+### 4. Decorator Pattern
+**Composite Providers**: `MakroElectrumMercuriusProvider` extends `ElectrumProvider`, decorates with Mercurius account routing
+
+### 5. Facade Pattern
+**SwitchingApiShell**: Simplifies complex provider interactions behind single API
+
+### 6. Builder Pattern
+**Message Construction**: `PinTranslationMessageBuilder` for PTS messages
+
+### 7. Repository Pattern
+**ReconDAO**: Data access abstraction for SAF database operations
+
+### 8. Scheduled Task Pattern
+**ReconSafProcessor**: `ScheduledExecutorService` for periodic retry processing
+
+---
+
+## Next Steps / Areas for Further Analysis
+
+1. **ESP Configuration Deep Dive**: Analyze eSocket.POS configuration templates and property mappings
+2. **Network Protocols**: Document TCP/IP socket layer for Postilion communication
+3. **Terminal Management**: Investigate terminal data capture, initialization, and closure workflows
+4. **Timeout Configuration**: Map timeout settings per transaction type (purchase, balance, etc.)
+5. **Error Handling Strategies**: Document retry logic, exponential backoff, max retry counts
+6. **Structured Data Standards**: Catalog known structured data keys across all transaction types
+7. **Tender Apportionment Logic**: Deep dive into `MassmartTender.apportionTenders()` algorithm
+8. **Response Code Mapping**: Complete catalog of response codes from all providers
+9. **Browser Agent Protocol**: Reverse-engineer Kinektek MCB communication protocol
+10. **Reconciliation File Formats**: Document recon file structures sent to Recon Assist+
+11. **Performance Characteristics**: Transaction throughput, memory footprint, database size over time
+12. **Failover Mechanisms**: Document PTS and Recon Service redundancy handling
+13. **Certificate Management**: Investigate SSL/TLS certificate handling for ESP and services
+14. **Offline Capabilities**: Document offline approval limits, floor limits, stand-in processing
+15. **Multi-Currency Support**: Investigate if SwitchingAPI supports non-ZAR transactions
+
+---
+
+## Repository Structure
+```
+SwitchingAPI/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── com/causalnexus/
+│   │   │   │   ├── ByteUtil.java
+│   │   │   │   ├── moneytransfer/pintranslation/      # PIN Translation Service
+│   │   │   │   └── reconciliation/                     # Recon SAF & models
+│   │   │   └── za/co/ucs/instore/pos/switchingapi/
+│   │   │       ├── ISwitchingApi.java                  # Main API interface
+│   │   │       ├── SwitchingApiShell.java              # Implementation
+│   │   │       ├── Version.java                        # Version 0.5.2
+│   │   │       ├── exception/                          # Exceptions
+│   │   │       ├── msg/                                # 60+ message beans
+│   │   │       ├── provider/
+│   │   │       │   ├── common/                         # Base provider classes
+│   │   │       │   ├── esp/                            # eSocket.POS integration
+│   │   │       │   ├── electrum/                       # Electrum VAS
+│   │   │       │   ├── mercurius/                      # Mercurius VAS
+│   │   │       │   ├── kinektek/                       # Browser Agent
+│   │   │       │   └── makro/                          # Makro composite providers
+│   │   │       ├── utils/                              # Utilities (BlackHawk, PAN, etc.)
+│   │   │       ├── validation/                         # Validators
+│   │   │       └── whitelist/                          # BIN whitelists
+│   │   └── resources/
+│   │       └── db/migration/h2/reconsaf/               # Flyway SAF schema
+│   └── test/
+│       └── java/                                       # Extensive test suites
+│           ├── com/causalnexus/                        # Recon & PTS tests
+│           └── za/co/ucs/instore/pos/switchingapi/test/
+│               ├── auto/                               # Automated test harness
+│               ├── codeexamples/                       # Usage examples
+│               └── Test*.java                          # Unit tests per feature
+├── config/                                             # Configuration files
+│   ├── switchingapi.properties                         # Main config
+│   ├── switchingapi.gk.properties                      # Game config variant
+│   └── log.properties                                  # Log4j config
+├── libs/                                               # System-scoped JARs
+│   ├── browseragentclient-0.9875.jar
+│   ├── ClientElectrumManual-0.3.2.jar
+│   ├── MercuriusCommons-0.0.7.jar
+│   ├── PostilionDependency-2.0.jar
+│   └── comm.jar
+├── doc/
+│   └── SwitchingAPI.0.5.2.docx                         # Technical documentation
+├── scripts/                                            # Build and test scripts
+├── out/                                                # Build output
+├── pom.xml                                             # Maven build definition
+├── roadmap.txt                                         # Version roadmap
+└── .gitignore
+
+Key Files:
+- pom.xml (lines 6-12: project metadata, lines 31-139: dependencies)
+- Version.java (line 9: version "0.5.2")
+- switchingapi.properties (line 12: core.type, lines 18-20: ESP config)
+```
+
+---
+
+## Contact/Stakeholders
+- **Primary Use Case**: Massmart multi-chain retail POS integration
+- **Chains**: Makro, Game, Builders, Dion Wired, Cambridge Food, etc.
+- **Target**: Mixed EFT + VAS transaction volumes in high-throughput retail environment
+- **Requirements**: Provider flexibility, resilience, chain-specific adaptations
+
+---
+
+**Analysis performed**: 2025-11-02
+**Codebase location**: C:\_development\Massmart\SwitchingAPI
+**Maven artifact**: com.causalnexus:SwitchingAPI:0.5.2
+**Documentation output**: D:\bma\SwitchingAPI_Functional_Summary.md

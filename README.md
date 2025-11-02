@@ -1,3 +1,5 @@
+<a name="top"></a>
+
 # Payment Platform - Business & Functional Overview
 
 Multi-tenant payment processing platform for retail operations handling transaction processing, financial reconciliation, compliance verification, and bulk disbursements.

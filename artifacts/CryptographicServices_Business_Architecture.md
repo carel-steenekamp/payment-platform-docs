@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
 
 # Cryptographic Services - Business & Architectural Overview
 
@@ -456,4 +456,5 @@ Cryptographic Services provides PCI-DSS compliant PIN translation capabilities t
 
 ---
 
-[← Back to Platform Overview](../README.md) | [↑ Top](#)
+[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+
