@@ -1,8 +1,8 @@
 <a name="top"></a>
 
-# Payment Switch Platform & Blockchain Integration Documentation
+# Nexus Evolution & Blockchain Integration Documentation
 
-**Strategic Overview**: Multi-tenant payment processing platform serving as merchant gateway to regulated blockchain infrastructure. Combines proven payment operations with Block Markets Africa's OpenRUN blockchain for tokenized assets, cross-border transfers, and instant settlement.
+**Strategic Overview**: Multi-tenant payment processing platform serving as merchant gateway to regulated blockchain infrastructure. The Nexus Evolution platform combines proven payment operations with Block Markets Africa's OpenRUN blockchain for tokenized assets, cross-border transfers, and instant settlement.
 
 **Last Updated**: 2025-11-02
 
@@ -11,9 +11,9 @@
 ## Quick Navigation
 
 ### Strategic Documentation
-- **[Payment Platform Overview](#platform-overview)** - Core payment processing capabilities
+- **[Nexus Evolution Overview](#platform-overview)** - Core payment processing capabilities
 - **[BMA Blockchain Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - Block Markets Africa business model, infrastructure, and market positioning
-- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Payment switch as merchant gateway to BMA blockchain
+- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Nexus Evolution as merchant gateway to BMA blockchain
 
 ### Component Documentation
 - **[Payment Processing](#payment-processing-layer)** - Transaction orchestration and routing
@@ -25,7 +25,7 @@
 
 ## Strategic Context
 
-### Payment Switch Platform
+### Nexus Evolution Platform
 
 Production payment processing infrastructure with proven capabilities:
 - Multi-tenant merchant management (aggregator-based isolation)

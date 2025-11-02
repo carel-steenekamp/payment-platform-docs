@@ -1,9 +1,9 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 
-# BMA Integration Analysis: Payment Switch as Merchant Gateway
+# BMA Integration Analysis: Nexus Evolution as Merchant Gateway
 ## Strategic Touchpoints, Complementarities, and Synergies
 
-**Analysis Focus**: Payment Switch Platform as Merchant-Facing Component to BMA Blockchain Infrastructure  
+**Analysis Focus**: Nexus Evolution Platform as Merchant-Facing Component to BMA Blockchain Infrastructure  
 **Date**: 2025-11-02  
 **Status**: Strategic Integration Architecture
 
@@ -11,10 +11,10 @@
 
 ## Executive Summary
 
-The existing payment switch platform (Realtime Switch, WebMerchant, Dashboard) demonstrates **proven merchant-facing capabilities** that align strategically with Block Markets Africa's need for **regulated FSP interfaces to blockchain infrastructure**. This analysis identifies concrete integration touchpoints where the payment switch becomes the **merchant gateway layer** enabling traditional businesses to access BMA's Regulated User Network (OpenRUN).
+The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstrates **proven merchant-facing capabilities** that align strategically with Block Markets Africa's need for **regulated FSP interfaces to blockchain infrastructure**. This analysis identifies concrete integration touchpoints where Nexus Evolution becomes the **merchant gateway layer** enabling traditional businesses to access BMA's Regulated User Network (OpenRUN).
 
 **Strategic Alignment**:
-- **Payment Switch Role**: Merchant-facing API gateway, transaction orchestration, compliance layer
+- **Nexus Evolution Role**: Merchant-facing API gateway, transaction orchestration, compliance layer
 - **BMA Role**: Blockchain settlement infrastructure, regulated wallets, tokenized assets
 - **Combined Value**: Traditional payment UX with blockchain settlement benefits
 
@@ -37,7 +37,7 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 - Businesses wanting blockchain services through regulated partners
 - Cross-border payment users, asset tokenization clients
 
-### Payment Switch Platform Recap
+### Nexus Evolution Platform Recap
 
 **Merchant-Facing Components**:
 
@@ -57,7 +57,7 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 
 ---
 
-## Integration Architecture: Payment Switch as BMA Merchant Gateway
+## Integration Architecture: Nexus Evolution as BMA Merchant Gateway
 
 ### Conceptual Model
 
@@ -69,7 +69,7 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
                          │ Existing APIs
                          ↓
 ┌─────────────────────────────────────────────────────────────┐
-│          PAYMENT SWITCH PLATFORM (Merchant Layer)           │
+│          NEXUS EVOLUTION PLATFORM (Merchant Layer)          │
 │  ┌──────────────────────────────────────────────────────┐  │
 │  │ WebMerchant API (.NET 9 - REST/Minimal APIs)         │  │
 │  │ - OAuth 2.0 authentication                           │  │
@@ -799,7 +799,7 @@ With BMA Integration: Customer pays with wallet app
   └── Fuel rebate: Distributed to stakeholders via smart contract (instant)
 ```
 
-### For Payment Switch Platform (Solution Owner)
+### For Nexus Evolution Platform (Solution Owner)
 
 **Strategic Benefits**:
 - **Regulatory Positioning**: Partner with FSCA-regulated blockchain infrastructure
@@ -822,7 +822,7 @@ With BMA Integration: Customer pays with wallet app
 - **Use Case Validation**: Real-world payment flows (not just crypto trading)
 - **Compliance Integration**: PCI-DSS + FSCA = comprehensive compliance
 
-**Example**: Payment switch with 500 merchants processing 100k transactions/day
+**Example**: Nexus Evolution with 500 merchants processing 100k transactions/day
 ```
 Without Integration: BMA markets to merchants individually (slow growth)
 
@@ -1066,7 +1066,7 @@ BMA Integration Settings:
 
 ### Core Alignment
 
-**Payment Switch Platform** provides:
+**Nexus Evolution Platform** provides:
 - Mature merchant-facing APIs (WebMerchant)
 - Proven transaction orchestration (Realtime Switch)
 - Operational management (Dashboard)
@@ -1104,7 +1104,7 @@ BMA Integration Settings:
 
 ## Related Documentation
 
-### Payment Switch Components
+### Nexus Evolution Components
 - **[Realtime Switch](Realtime_Business_Architecture.md)**: Transaction orchestration
 - **[WebMerchant API](SwitchingAPI_Business_Architecture.md)**: Merchant REST API
 - **[Dashboard](Dashboard_Business_Architecture.md)**: Operational management
@@ -1117,7 +1117,7 @@ BMA Integration Settings:
 - **[Block Markets Africa Analysis](Block_Markets_Africa_Analysis.md)**: Comprehensive BMA business/technical analysis
 
 ### Platform Overview
-- **[README](../README.md)**: Complete platform documentation index
+- **[Platform Overview](../README.md)**: Complete Nexus Evolution documentation index
 
 ---
 
