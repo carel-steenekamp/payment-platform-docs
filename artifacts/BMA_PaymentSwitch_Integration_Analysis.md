@@ -11,7 +11,7 @@
 
 ## Executive Summary
 
-The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstrates **proven merchant-facing capabilities** that align strategically with Block Markets Africa's need for **regulated FSP interfaces to blockchain infrastructure**. This analysis identifies concrete integration touchpoints where Nexus Evolution becomes the **merchant gateway layer** enabling traditional businesses to access BMA's Regulated User Network (OpenRUN).
+The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstrates **proven merchant-facing capabilities** that align strategically with Block Markets Africa's **Open Financial Market Infrastructure (OpenFMI)** vision for **regulated FSP interfaces to blockchain services**. This analysis identifies concrete integration touchpoints where Nexus Evolution becomes the **merchant gateway layer** enabling traditional businesses to access BMA's Regulated User Network (OpenRUN).
 
 **Strategic Alignment**:
 - **Nexus Evolution Role**: Merchant-facing API gateway, transaction orchestration, compliance layer
@@ -25,6 +25,10 @@ The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstra
 ### BMA Business Model Recap
 
 From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
+
+**Block Markets Africa (BMA) - Open Financial Market Infrastructure (OpenFMI)**
+
+**Vision**: Collaborative, regulated blockchain infrastructure operated by licensed FSPs - "Leveling the playing field for all."
 
 **BMA Infrastructure Layers**:
 1. **OpenRUN Blockchain**: EVM-compatible, FSP-operated validators, 1000+ TPS

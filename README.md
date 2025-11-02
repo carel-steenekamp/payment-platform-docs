@@ -1,8 +1,10 @@
 <a name="top"></a>
 
-# Nexus Evolution & Blockchain Integration Documentation
+# Nexus Evolution Platform & Block Markets Africa's Open Financial Markets
 
-**Strategic Overview**: Multi-tenant payment processing platform serving as merchant gateway to regulated blockchain infrastructure. The Nexus Evolution platform combines proven payment operations with Block Markets Africa's OpenRUN blockchain for tokenized assets, cross-border transfers, and instant settlement.
+**Strategic Overview**: Multi-tenant payment processing platform serving as merchant gateway to regulated blockchain infrastructure. The Nexus Evolution platform combines proven payment operations with Block Markets Africa's **Open Financial Market Infrastructure (OpenFMI)** for tokenized assets, cross-border transfers, and instant settlement.
+
+**Open Financial Markets**: BMA's vision of collaborative, regulated blockchain infrastructure operated by licensed Financial Services Providers (FSPs) - "Leveling the playing field for all."
 
 **Last Updated**: 2025-11-02
 
@@ -12,8 +14,8 @@
 
 ### Strategic Documentation
 - **[Nexus Evolution Overview](#platform-overview)** - Core payment processing capabilities
-- **[BMA Blockchain Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - Block Markets Africa business model, infrastructure, and market positioning
-- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Nexus Evolution as merchant gateway to BMA blockchain
+- **[BMA Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - Block Markets Africa's Open Financial Market Infrastructure (OpenFMI), Regulated User Network (RUN), and market positioning
+- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Nexus Evolution as merchant gateway to BMA's OpenRUN blockchain
 
 ### Component Documentation
 - **[Payment Processing](#payment-processing-layer)** - Transaction orchestration and routing
@@ -34,13 +36,17 @@ Production payment processing infrastructure with proven capabilities:
 - Financial reconciliation (three-way matching, automated settlement)
 - Operational management (Dashboard portal, transaction monitoring)
 
-### Block Markets Africa (BMA)
+### Block Markets Africa (BMA) - Open Financial Markets
 
-Regulated blockchain infrastructure for financial services:
+**Vision**: Open Financial Market Infrastructure (OpenFMI) enabling regulated, collaborative blockchain services
+
+**Core Infrastructure**:
 - **OpenRUN Network**: EVM-compatible blockchain (1000+ TPS, FSP-operated validators)
 - **Regulated Wallets**: KYC'd wallets with Smart KYC NFTs for compliance
 - **Enterprise APIs**: Wallet-as-a-Service (custodial/non-custodial)
 - **Three-Tier Model**: Settlement Partners → Clearing Members → Distributors
+
+**Philosophy**: "Leveling the playing field for all" - enabling FSPs of all sizes to deliver advanced financial services through shared, regulated blockchain infrastructure.
 
 **Full Analysis**: [Block Markets Africa - Business & Strategic Analysis](artifacts/Block_Markets_Africa_Analysis.md)
 
