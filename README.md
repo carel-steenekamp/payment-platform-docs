@@ -22,7 +22,7 @@ The platform processes card payments, EFT transactions, airtime sales, vouchers,
 
 ### Payment Processing Layer
 
-**[SwitchingAPI - POS Integration Library](SwitchingAPI_Business_Architecture/artifacts.md)**
+**[SwitchingAPI - POS Integration Library](artifacts/SwitchingAPI_Business_Architecture.md)**
 
 Java library embedded in point-of-sale applications providing unified payment API.
 
@@ -36,7 +36,7 @@ Java library embedded in point-of-sale applications providing unified payment AP
 
 ---
 
-**[OmniSocket - Store Gateway](OmniSocket_Business_Architecture/artifacts.md)**
+**[OmniSocket - Store Gateway](artifacts/OmniSocket_Business_Architecture.md)**
 
 Gateway service aggregating multiple POS terminals at store level.
 
@@ -50,7 +50,7 @@ Gateway service aggregating multiple POS terminals at store level.
 
 ---
 
-**[Realtime (NexusV4) - Central Transaction Switch](Realtime_Business_Architecture/artifacts.md)**
+**[Realtime (NexusV4) - Central Transaction Switch](artifacts/Realtime_Business_Architecture.md)**
 
 Central orchestration platform coordinating enterprise-wide payment flow.
 
@@ -67,7 +67,7 @@ Central orchestration platform coordinating enterprise-wide payment flow.
 
 ### Financial Operations
 
-**[ReconService - Automated Reconciliation](ReconService_Business_Architecture/artifacts.md)**
+**[ReconService - Automated Reconciliation](artifacts/ReconService_Business_Architecture.md)**
 
 Financial reconciliation service matching transactions against bank statements.
 
@@ -82,7 +82,7 @@ Financial reconciliation service matching transactions against bank statements.
 
 ---
 
-**[Pay2ID - Batch Payment Processing](Pay2ID_Business_Architecture/artifacts.md)**
+**[Pay2ID - Batch Payment Processing](artifacts/Pay2ID_Business_Architecture.md)**
 
 Bulk payment processing for payroll and supplier disbursements via TymeBank.
 
@@ -99,7 +99,7 @@ Bulk payment processing for payroll and supplier disbursements via TymeBank.
 
 ### Compliance & Security
 
-**[FSCA Verification - Regulatory Compliance](FSCA_Verification_Business_Architecture/artifacts.md)**
+**[FSCA Verification - Regulatory Compliance](artifacts/FSCA_Verification_Business_Architecture.md)**
 
 Financial advisor licensing verification against FSCA regulatory registry.
 
@@ -114,7 +114,7 @@ Financial advisor licensing verification against FSCA regulatory registry.
 
 ---
 
-**[Cryptographic Services - HSM Integration](CryptographicServices_Business_Architecture/artifacts.md)**
+**[Cryptographic Services - HSM Integration](artifacts/CryptographicServices_Business_Architecture.md)**
 
 PIN translation and cryptographic operations via Hardware Security Module.
 
@@ -131,7 +131,7 @@ PIN translation and cryptographic operations via Hardware Security Module.
 
 ### Operational Management
 
-**[Dashboard - Operations Portal](Dashboard_Business_Architecture/artifacts.md)**
+**[Dashboard - Operations Portal](artifacts/Dashboard_Business_Architecture.md)**
 
 Multi-tenant management and reporting interface.
 
@@ -148,7 +148,7 @@ Multi-tenant management and reporting interface.
 
 ### Platform Integration
 
-**[MasscloudAPI - Subsumption Analysis](MasscloudAPI_Subsumption_Analysis/artifacts.md)**
+**[MasscloudAPI - Subsumption Analysis](artifacts/MasscloudAPI_Subsumption_Analysis.md)**
 
 Analysis of how standalone API functionality is encompassed within broader platform architecture.
 
@@ -293,17 +293,17 @@ Realtime (central) → Payment Provider → Response Chain
 ## Document Navigation
 
 **By Business Function**:
-- Payment processing → [SwitchingAPI](SwitchingAPI_Business_Architecture/artifacts.md), [OmniSocket](OmniSocket_Business_Architecture/artifacts.md), [Realtime](Realtime_Business_Architecture/artifacts.md)
-- Financial operations → [ReconService](ReconService_Business_Architecture/artifacts.md), [Pay2ID](Pay2ID_Business_Architecture/artifacts.md)
-- Compliance → [FSCA Verification](FSCA_Verification_Business_Architecture/artifacts.md), [Cryptographic Services](CryptographicServices_Business_Architecture/artifacts.md)
-- Management → [Dashboard](Dashboard_Business_Architecture/artifacts.md)
+- Payment processing → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
+- Financial operations → [ReconService](artifacts/ReconService_Business_Architecture.md), [Pay2ID](artifacts/Pay2ID_Business_Architecture.md)
+- Compliance → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md), [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
+- Management → [Dashboard](artifacts/Dashboard_Business_Architecture.md)
 
 **By Business Pattern**:
 - Provider abstraction → All payment processing components
-- Transaction resilience → [SwitchingAPI](SwitchingAPI_Business_Architecture/artifacts.md), [OmniSocket](OmniSocket_Business_Architecture/artifacts.md), [Realtime](Realtime_Business_Architecture/artifacts.md)
-- Batch processing → [Pay2ID](Pay2ID_Business_Architecture/artifacts.md), [ReconService](ReconService_Business_Architecture/artifacts.md)
-- Compliance verification → [FSCA Verification](FSCA_Verification_Business_Architecture/artifacts.md)
-- Cryptographic security → [Cryptographic Services](CryptographicServices_Business_Architecture/artifacts.md)
+- Transaction resilience → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
+- Batch processing → [Pay2ID](artifacts/Pay2ID_Business_Architecture.md), [ReconService](artifacts/ReconService_Business_Architecture.md)
+- Compliance verification → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md)
+- Cryptographic security → [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
 
 ---
 
