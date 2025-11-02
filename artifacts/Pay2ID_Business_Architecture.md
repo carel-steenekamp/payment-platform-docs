@@ -1,4 +1,4 @@
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
 # Pay2ID Batch Payment Processing - Business & Architectural Overview
 
@@ -642,5 +642,5 @@ Pay2ID provides batch payment processing for TymeBank Pay2ID disbursements with 
 
 ---
 
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 

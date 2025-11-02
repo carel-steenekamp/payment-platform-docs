@@ -1,4 +1,4 @@
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
 # FSCA Verification - Business & Architectural Overview
 
@@ -752,5 +752,5 @@ FSCA Verification is a regulatory compliance verification system that scrapes th
 
 ---
 
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 

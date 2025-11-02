@@ -1,4 +1,4 @@
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
 # SwitchingAPI - Business & Architectural Context
 ## Nexus Evolution Component Analysis
@@ -270,5 +270,5 @@ Store Network
 
 ---
 
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 

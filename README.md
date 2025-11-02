@@ -15,7 +15,7 @@
 ### Strategic Documentation
 - **[Nexus Evolution Overview](#platform-overview)** - Core payment processing capabilities
 - **[BMA Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - Block Markets Africa's Open Financial Market Infrastructure (OpenFMI), Regulated User Network (RUN), and market positioning
-- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Nexus Evolution as merchant gateway to BMA's OpenRUN blockchain
+- **[Collaboration Strategy](artifacts/BMA_Collaboration_Analysis.md)** - Nexus Evolution as merchant gateway to BMA's OpenRUN blockchain
 
 ### Component Documentation
 - **[Payment Processing](#payment-processing-layer)** - Transaction orchestration and routing
@@ -50,7 +50,7 @@ Production payment processing infrastructure with proven capabilities:
 
 **Full Analysis**: [Block Markets Africa - Business & Strategic Analysis](artifacts/Block_Markets_Africa_Analysis.md)
 
-### Integration Vision
+### Collaboration Vision
 
 **Combined Value Proposition**: "Traditional Payment UX + Blockchain Settlement Benefits"
 
@@ -59,7 +59,7 @@ Production payment processing infrastructure with proven capabilities:
 - **Platform**: Competitive differentiation, regulatory positioning (PCI-DSS + FSCA)
 - **BMA**: Merchant distribution, transaction volume, FSP credibility
 
-**Integration Architecture**: [Payment Switch as BMA Merchant Gateway](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)
+**Collaboration Architecture**: [Nexus Evolution as BMA Merchant Gateway](artifacts/BMA_Collaboration_Analysis.md)
 
 ---
 
@@ -372,7 +372,7 @@ Realtime (central) → Payment Provider → Response Chain
 
 ---
 
-## BMA Integration Touchpoints
+## BMA Collaboration Touchpoints
 
 ### Component-Level Integration Mapping
 
@@ -380,45 +380,45 @@ Realtime (central) → Payment Provider → Response Chain
 - New product types: Blockchain transfers, tokenized assets, cross-border payments
 - OAuth 2.0 authentication preserved
 - Balance management extends to blockchain wallets
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
 
 **Realtime Switch ↔ BMA Blockchain Settlement**
 - BMA supplier module following existing patterns
 - Transaction state machine unchanged (Authorize → Confirm → Complete)
 - Blockchain transaction hash stored as SupplierReference
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
 
 **Dashboard ↔ BMA Wallet Management**
 - Merchant onboarding with blockchain wallet creation
 - Dual balance tracking (SQL + blockchain)
 - Transaction monitoring with blockchain explorer links
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#3-dashboard--bma-wallet-management)
 
 **Cryptographic Services ↔ BMA Smart KYC NFTs**
 - HSM infrastructure for KYC data encryption
 - Custodial wallet key management
 - PIN translation for wallet authentication
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
 
 **Pay2ID ↔ BMA Tokenized Distributions**
 - Bulk blockchain transfers (batch wallet funding)
 - Smart contract rebate distributions
 - Tokenized airtime/loyalty distribution
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
 
 **OmniSocket ↔ BMA Terminal Integration**
 - Blockchain wallet payments at POS terminals
 - QR code/NFC wallet integration
 - Tokenized loyalty redemption at checkout
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
 
 **ReconService ↔ BMA Blockchain Reconciliation**
 - Three-way reconciliation (switch + API + blockchain)
 - Real-time balance reconciliation
 - Settlement file export for BMA
-- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
+- [Collaboration Details](artifacts/BMA_Collaboration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
 
-**Complete Integration Architecture**: [Payment Switch as BMA Merchant Gateway](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)
+**Complete Collaboration Architecture**: [Nexus Evolution as BMA Merchant Gateway](artifacts/BMA_Collaboration_Analysis.md)
 
 [↑ Back to Top](#top)
 
@@ -428,7 +428,7 @@ Realtime (central) → Payment Provider → Response Chain
 
 ### Strategic Documentation
 - **[BMA Business Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - OpenFMI vision, Regulated User Network, market positioning
-- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Touchpoints, synergies, implementation roadmap
+- **[Collaboration Strategy](artifacts/BMA_Collaboration_Analysis.md)** - Touchpoints, synergies, implementation roadmap
 
 ### By Business Function
 - **Payment processing** → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
@@ -443,14 +443,14 @@ Realtime (central) → Payment Provider → Response Chain
 - **Compliance verification** → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md)
 - **Cryptographic security** → [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
 
-### By Integration Touchpoint
-- **Merchant API Gateway** → [WebMerchant + BMA APIs](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
-- **Transaction Settlement** → [Realtime + Blockchain](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
-- **Wallet Management** → [Dashboard + BMA Wallets](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
-- **KYC & Security** → [Cryptographic Services + Smart KYC](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
-- **Bulk Payments** → [Pay2ID + Tokenized Distributions](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
-- **Terminal Payments** → [OmniSocket + BMA Wallets](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
-- **Reconciliation** → [ReconService + Blockchain Ledger](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
+### By Collaboration Touchpoint
+- **Merchant API Gateway** → [WebMerchant + BMA APIs](artifacts/BMA_Collaboration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
+- **Transaction Settlement** → [Realtime + Blockchain](artifacts/BMA_Collaboration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+- **Wallet Management** → [Dashboard + BMA Wallets](artifacts/BMA_Collaboration_Analysis.md#3-dashboard--bma-wallet-management)
+- **KYC & Security** → [Cryptographic Services + Smart KYC](artifacts/BMA_Collaboration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
+- **Bulk Payments** → [Pay2ID + Tokenized Distributions](artifacts/BMA_Collaboration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
+- **Terminal Payments** → [OmniSocket + BMA Wallets](artifacts/BMA_Collaboration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
+- **Reconciliation** → [ReconService + Blockchain Ledger](artifacts/BMA_Collaboration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
 
 [↑ Back to Top](#top)
 
