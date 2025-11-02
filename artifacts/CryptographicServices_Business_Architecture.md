@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 
 # Cryptographic Services - Business & Architectural Overview
 
@@ -456,5 +456,5 @@ Cryptographic Services provides PCI-DSS compliant PIN translation capabilities t
 
 ---
 
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 

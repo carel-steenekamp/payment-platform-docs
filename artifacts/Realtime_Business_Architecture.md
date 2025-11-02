@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 
 # Realtime Switch (NexusV4) - Business & Architectural Overview
 
@@ -496,9 +496,43 @@ Supplier Module (e.g., Flash)
 
 ---
 
+## BMA Blockchain Integration
+
+**Integration Touchpoint**: [Realtime Switch ↔ BMA Blockchain Settlement](BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+
+### Realtime as BMA Supplier Module
+
+Realtime Switch extends to blockchain settlement through a new **BMA Blockchain Supplier Module**:
+
+**Integration Pattern**:
+- BMA supplier module follows existing module architecture (FrameworkMessageProcessor)
+- Transaction state machine unchanged (Authorize → Confirm → Complete → Reverse)
+- Blockchain transaction hash stored as SupplierReference
+- Smart KYC NFT validation during Authorize phase
+- Balance sync between SQL database and blockchain wallets
+
+**New Product Types**:
+- Blockchain wallet transfers (merchant to consumer)
+- Tokenized asset purchases (ERC20 airtime, ERC1400 fractional assets)
+- Cross-border payments via OpenRUN network
+- Smart contract-based distributions
+
+**Business Value**:
+- Instant settlement (seconds vs T+1/T+2)
+- Lower transaction costs (minimal gas fees)
+- Immutable audit trail on blockchain
+- Regulatory compliance via Smart KYC NFTs
+- Traditional payment UX with blockchain benefits
+
+**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#a-new-supplier-module-bma-blockchain-supplier)
+
+---
+
 ## Summary
 
 Realtime Switch is a battle-tested central orchestration platform processing 500+ TPS across 100+ merchants and 14+ suppliers. Its plugin architecture enables rapid supplier onboarding, message-driven design provides fault isolation, and comprehensive resilience patterns (SAF, circuit breakers, HA) ensure zero transaction loss. Integration with Office Service provides real-time credit management, while HSM integration ensures PCI-DSS compliance.
+
+**BMA Integration**: Extends to blockchain settlement via new supplier module, enabling instant settlement and tokenized assets while preserving existing transaction patterns.
 
 **Strategic Value**: Demonstrates proven patterns for multi-channel acquisition, multi-provider routing, comprehensive resilience, and operational maturity at enterprise scale.
 
@@ -511,5 +545,5 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 
 ---
 
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 

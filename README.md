@@ -1,10 +1,64 @@
 <a name="top"></a>
 
-# Payment Platform - Business & Functional Overview
+# Payment Switch Platform & Blockchain Integration Documentation
 
-Multi-tenant payment processing platform for retail operations handling transaction processing, financial reconciliation, compliance verification, and bulk disbursements.
+**Strategic Overview**: Multi-tenant payment processing platform serving as merchant gateway to regulated blockchain infrastructure. Combines proven payment operations with Block Markets Africa's OpenRUN blockchain for tokenized assets, cross-border transfers, and instant settlement.
+
+**Last Updated**: 2025-11-02
 
 ---
+
+## Quick Navigation
+
+### Strategic Documentation
+- **[Payment Platform Overview](#platform-overview)** - Core payment processing capabilities
+- **[BMA Blockchain Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - Block Markets Africa business model, infrastructure, and market positioning
+- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Payment switch as merchant gateway to BMA blockchain
+
+### Component Documentation
+- **[Payment Processing](#payment-processing-layer)** - Transaction orchestration and routing
+- **[Financial Operations](#financial-operations)** - Reconciliation and bulk payments
+- **[Compliance & Security](#compliance--security)** - Regulatory verification and cryptography
+- **[Operational Management](#operational-management)** - Monitoring and configuration
+
+---
+
+## Strategic Context
+
+### Payment Switch Platform
+
+Production payment processing infrastructure with proven capabilities:
+- Multi-tenant merchant management (aggregator-based isolation)
+- Transaction orchestration (state machine, multi-supplier routing)
+- PCI-DSS compliance (HSM integration, PIN translation)
+- Financial reconciliation (three-way matching, automated settlement)
+- Operational management (Dashboard portal, transaction monitoring)
+
+### Block Markets Africa (BMA)
+
+Regulated blockchain infrastructure for financial services:
+- **OpenRUN Network**: EVM-compatible blockchain (1000+ TPS, FSP-operated validators)
+- **Regulated Wallets**: KYC'd wallets with Smart KYC NFTs for compliance
+- **Enterprise APIs**: Wallet-as-a-Service (custodial/non-custodial)
+- **Three-Tier Model**: Settlement Partners → Clearing Members → Distributors
+
+**Full Analysis**: [Block Markets Africa - Business & Strategic Analysis](artifacts/Block_Markets_Africa_Analysis.md)
+
+### Integration Vision
+
+**Combined Value Proposition**: "Traditional Payment UX + Blockchain Settlement Benefits"
+
+- **Merchants**: No integration changes, new product types (blockchain transfers, tokenized assets)
+- **Consumers**: Instant settlement, cross-border payments, tokenized loyalty
+- **Platform**: Competitive differentiation, regulatory positioning (PCI-DSS + FSCA)
+- **BMA**: Merchant distribution, transaction volume, FSP credibility
+
+**Integration Architecture**: [Payment Switch as BMA Merchant Gateway](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)
+
+---
+
+<a name="platform-overview"></a>
+## Platform Capabilities
 
 ## Platform Capabilities
 
@@ -17,6 +71,8 @@ The platform processes card payments, EFT transactions, airtime sales, vouchers,
 - Zero transaction loss through store-and-forward queuing
 - Multi-tenant architecture supports diverse retail brands
 - Automated financial settlement reduces manual effort
+
+[↑ Back to Top](#top)
 
 ---
 
@@ -65,6 +121,8 @@ Central orchestration platform coordinating enterprise-wide payment flow.
 - Circuit breakers and failure isolation
 - Transaction audit trail and monitoring
 
+[↑ Back to Top](#top)
+
 ---
 
 ### Financial Operations
@@ -96,6 +154,8 @@ Bulk payment processing for payroll and supplier disbursements via TymeBank.
 - Xero accounting integration
 - Store-and-forward queuing for failed batches
 - OAuth token management
+
+[↑ Back to Top](#top)
 
 ---
 
@@ -129,6 +189,8 @@ PIN translation and cryptographic operations via Hardware Security Module.
 - PCI-DSS Level 1 compliant key management
 - Secure cryptographic operation logging
 
+[↑ Back to Top](#top)
+
 ---
 
 ### Operational Management
@@ -146,6 +208,8 @@ Multi-tenant management and reporting interface.
 - Merchant configuration and administration
 - Self-service reporting
 
+[↑ Back to Top](#top)
+
 ---
 
 ### Platform Integration
@@ -155,6 +219,8 @@ Multi-tenant management and reporting interface.
 Analysis of how standalone API functionality is encompassed within broader platform architecture.
 
 **Business Function**: Documents platform evolution from single-tenant standalone services to integrated multi-tenant platform, demonstrating architectural patterns for service consolidation.
+
+[↑ Back to Top](#top)
 
 ---
 
@@ -208,6 +274,8 @@ Hardware-backed cryptographic processing with secure key boundaries.
 
 **Implementation**: CryptographicServices integrates with HSMs for PIN translation, EMV key derivation, and encrypted data handling.
 
+[↑ Back to Top](#top)
+
 ---
 
 ## Platform Architecture
@@ -241,6 +309,8 @@ Realtime (central) → Payment Provider → Response Chain
 
 **Observability**: Complete audit trail from terminal to provider and back.
 
+[↑ Back to Top](#top)
+
 ---
 
 ## Operational Characteristics
@@ -266,6 +336,8 @@ Realtime (central) → Payment Provider → Response Chain
 - SQLite (store-level queuing)
 - H2 (terminal-level queuing)
 
+[↑ Back to Top](#top)
+
 ---
 
 ## Business Impact
@@ -290,22 +362,91 @@ Realtime (central) → Payment Provider → Response Chain
 - Competitive provider pricing through abstraction
 - Reduced manual effort in reconciliation and compliance
 
+[↑ Back to Top](#top)
+
+---
+
+## BMA Integration Touchpoints
+
+### Component-Level Integration Mapping
+
+**WebMerchant API ↔ BMA Enterprise APIs**
+- New product types: Blockchain transfers, tokenized assets, cross-border payments
+- OAuth 2.0 authentication preserved
+- Balance management extends to blockchain wallets
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
+
+**Realtime Switch ↔ BMA Blockchain Settlement**
+- BMA supplier module following existing patterns
+- Transaction state machine unchanged (Authorize → Confirm → Complete)
+- Blockchain transaction hash stored as SupplierReference
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+
+**Dashboard ↔ BMA Wallet Management**
+- Merchant onboarding with blockchain wallet creation
+- Dual balance tracking (SQL + blockchain)
+- Transaction monitoring with blockchain explorer links
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
+
+**Cryptographic Services ↔ BMA Smart KYC NFTs**
+- HSM infrastructure for KYC data encryption
+- Custodial wallet key management
+- PIN translation for wallet authentication
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
+
+**Pay2ID ↔ BMA Tokenized Distributions**
+- Bulk blockchain transfers (batch wallet funding)
+- Smart contract rebate distributions
+- Tokenized airtime/loyalty distribution
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
+
+**OmniSocket ↔ BMA Terminal Integration**
+- Blockchain wallet payments at POS terminals
+- QR code/NFC wallet integration
+- Tokenized loyalty redemption at checkout
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
+
+**ReconService ↔ BMA Blockchain Reconciliation**
+- Three-way reconciliation (switch + API + blockchain)
+- Real-time balance reconciliation
+- Settlement file export for BMA
+- [Integration Details](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
+
+**Complete Integration Architecture**: [Payment Switch as BMA Merchant Gateway](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)
+
+[↑ Back to Top](#top)
+
 ---
 
 ## Document Navigation
 
-**By Business Function**:
-- Payment processing → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
-- Financial operations → [ReconService](artifacts/ReconService_Business_Architecture.md), [Pay2ID](artifacts/Pay2ID_Business_Architecture.md)
-- Compliance → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md), [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
-- Management → [Dashboard](artifacts/Dashboard_Business_Architecture.md)
+### Strategic Documentation
+- **[BMA Business Analysis](artifacts/Block_Markets_Africa_Analysis.md)** - OpenFMI vision, Regulated User Network, market positioning
+- **[Integration Strategy](artifacts/BMA_PaymentSwitch_Integration_Analysis.md)** - Touchpoints, synergies, implementation roadmap
 
-**By Business Pattern**:
-- Provider abstraction → All payment processing components
-- Transaction resilience → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
-- Batch processing → [Pay2ID](artifacts/Pay2ID_Business_Architecture.md), [ReconService](artifacts/ReconService_Business_Architecture.md)
-- Compliance verification → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md)
-- Cryptographic security → [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
+### By Business Function
+- **Payment processing** → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
+- **Financial operations** → [ReconService](artifacts/ReconService_Business_Architecture.md), [Pay2ID](artifacts/Pay2ID_Business_Architecture.md)
+- **Compliance** → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md), [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
+- **Management** → [Dashboard](artifacts/Dashboard_Business_Architecture.md)
+
+### By Business Pattern
+- **Provider abstraction** → All payment processing components
+- **Transaction resilience** → [SwitchingAPI](artifacts/SwitchingAPI_Business_Architecture.md), [OmniSocket](artifacts/OmniSocket_Business_Architecture.md), [Realtime](artifacts/Realtime_Business_Architecture.md)
+- **Batch processing** → [Pay2ID](artifacts/Pay2ID_Business_Architecture.md), [ReconService](artifacts/ReconService_Business_Architecture.md)
+- **Compliance verification** → [FSCA Verification](artifacts/FSCA_Verification_Business_Architecture.md)
+- **Cryptographic security** → [Cryptographic Services](artifacts/CryptographicServices_Business_Architecture.md)
+
+### By Integration Touchpoint
+- **Merchant API Gateway** → [WebMerchant + BMA APIs](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#1-webmerchant-api--bma-enterprise-apis)
+- **Transaction Settlement** → [Realtime + Blockchain](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+- **Wallet Management** → [Dashboard + BMA Wallets](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
+- **KYC & Security** → [Cryptographic Services + Smart KYC](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts)
+- **Bulk Payments** → [Pay2ID + Tokenized Distributions](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
+- **Terminal Payments** → [OmniSocket + BMA Wallets](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration)
+- **Reconciliation** → [ReconService + Blockchain Ledger](artifacts/BMA_PaymentSwitch_Integration_Analysis.md#7-reconservice--bma-blockchain-reconciliation)
+
+[↑ Back to Top](#top)
 
 ---
 
@@ -317,6 +458,8 @@ Realtime (central) → Payment Provider → Response Chain
 **Orchestration Layer**: 1/3 complete (33%)
 **Operational Services**: 4/5 complete (80%)
 **Infrastructure Services**: 1/2 complete (50%)
+
+[↑ Back to Top](#top)
 
 ---
 

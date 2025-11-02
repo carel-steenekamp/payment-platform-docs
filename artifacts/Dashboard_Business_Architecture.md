@@ -1,4 +1,4 @@
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 
 # Dashboard - Business & Architectural Context
 ## Nexus Evolution Component Analysis
@@ -410,6 +410,49 @@ SQL Server (Shared with Realtime)
 
 ---
 
+## BMA Blockchain Integration
+
+**Integration Touchpoint**: [Dashboard ↔ BMA Wallet Management](BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
+
+### Dashboard as Blockchain Operations Portal
+
+Dashboard extends to blockchain operations management:
+
+**Merchant Onboarding**:
+- Create blockchain wallet during merchant setup (custodial or non-custodial)
+- Assign Smart KYC NFT tier (Basic, Standard, Enhanced)
+- Auto-fund wallet with initial tokenized balance (eZAR)
+- Configure product-to-blockchain routing
+
+**Balance Management**:
+- Dual tracking: SQL database + blockchain wallet
+- Real-time sync status indicators
+- Variance detection and reconciliation
+- Multi-asset display (eZAR, tokenized airtime, loyalty tokens)
+
+**Transaction Monitoring**:
+- Enhanced detail view with blockchain fields:
+  - Wallet addresses (source/destination)
+  - Blockchain transaction hash (link to OpenRUN explorer)
+  - Block number and confirmation time
+  - Smart KYC validation status
+  - Gas fees
+
+**Reporting**:
+- Blockchain transaction report (all BMA settlements)
+- Wallet balance reconciliation (SQL vs blockchain variance)
+- Cross-border settlement report (OpenRUN vs SWIFT comparison)
+
+**Business Value**:
+- Unified operational view (traditional + blockchain)
+- Same multi-tenant isolation applies to blockchain wallets
+- Existing audit logging captures blockchain operations
+- Zero UI disruption for operations teams
+
+**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#integration-capabilities)
+
+---
+
 **Document Purpose**: Business and architectural reference for current system understanding
 **Audience**: Business stakeholders, solution architects, operations teams
 **Scope**: Functional capabilities, architectural patterns, strategic value (not implementation details)
@@ -417,5 +460,5 @@ SQL Server (Shared with Realtime)
 
 ---
 
-[← Back to Platform Overview](../README.md#top) | [↑ Top](#)
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Integration Strategy](BMA_PaymentSwitch_Integration_Analysis.md) | [↑ Top](#)
 
