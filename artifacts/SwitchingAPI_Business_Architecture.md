@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # SwitchingAPI - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -265,3 +267,7 @@ Store Network
 **Document Purpose**: Business and architectural reference for next-generation platform planning
 **Audience**: Business stakeholders, solution architects, product managers
 **Scope**: Functional capabilities, architectural patterns, strategic value (not implementation details)
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

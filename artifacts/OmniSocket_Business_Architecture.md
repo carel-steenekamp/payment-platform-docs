@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # OmniSocket X - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -407,3 +409,7 @@ Regional Cloud
 **Document Purpose**: Business and architectural reference for next-generation platform planning
 **Audience**: Business stakeholders, solution architects, product managers
 **Scope**: Functional capabilities, architectural patterns, strategic value (not implementation details)
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # Cryptographic Services - Business & Architectural Overview
 
 **Component**: PIN Translation & Cryptographic Services
@@ -451,3 +453,7 @@ Cryptographic Services provides PCI-DSS compliant PIN translation capabilities t
 **Document Purpose**: Business and architectural stub for future analysis
 **Audience**: Business stakeholders, solution architects, security officers
 **Scope**: High-level overview, key patterns, strategic recommendations (detailed analysis pending)
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

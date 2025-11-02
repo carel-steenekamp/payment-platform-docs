@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # Realtime Switch (NexusV4) - Business & Architectural Overview
 
 **Component**: Realtime Transaction Switch
@@ -505,3 +507,8 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 **Document Purpose**: Business and architectural reference for current system
 **Audience**: Business stakeholders, solution architects, operations teams
 **Scope**: Executive overview, next-gen patterns, functional capabilities, architecture
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # Reconciliation Service - Business & Architectural Overview
 
 **Component**: Reconciliation Service (Massmart)  
@@ -601,3 +603,8 @@ Reconciliation Service provides automated transaction reconciliation and financi
 **Document Purpose**: Business and architectural stub for future analysis  
 **Audience**: Business stakeholders, solution architects, operations teams  
 **Scope**: High-level overview, key patterns, strategic recommendations (detailed analysis pending)
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

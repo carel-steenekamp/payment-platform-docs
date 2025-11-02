@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # Pay2ID Batch Payment Processing - Business & Architectural Overview
 
 **Component**: Pay2ID (Batch Payment System for TymeBank)  
@@ -595,3 +597,8 @@ Pay2ID provides batch payment processing for TymeBank Pay2ID disbursements with 
 **Document Purpose**: Business and architectural stub for future analysis  
 **Audience**: Business stakeholders, solution architects, operations teams  
 **Scope**: High-level overview, key patterns, strategic recommendations (detailed analysis pending)
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

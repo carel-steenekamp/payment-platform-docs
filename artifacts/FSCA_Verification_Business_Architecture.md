@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # FSCA Verification - Business & Architectural Overview
 
 **Component**: FSCA Verification (Financial Sector Conduct Authority Compliance System)  
@@ -746,3 +748,8 @@ FSCA Verification is a regulatory compliance verification system that scrapes th
 **Document Purpose**: Business and architectural stub for future analysis  
 **Audience**: Business stakeholders, solution architects, operations teams  
 **Scope**: High-level overview, key patterns, strategic recommendations (detailed analysis pending)
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

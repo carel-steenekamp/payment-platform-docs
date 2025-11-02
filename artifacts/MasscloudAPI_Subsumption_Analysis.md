@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # MasscloudAPI Subsumption Analysis
 
 **Component**: MasscloudAPI (Massmart Custom Payment Gateway)  
@@ -359,3 +361,8 @@ MasscloudAPI is a custom payment gateway built for Massmart retail operations us
 **Document Purpose**: Demonstrate complete functional subsumption of MasscloudAPI by NexusV4 platform  
 **Audience**: Business stakeholders, solution architects, migration planners  
 **Scope**: Complete architectural comparison and migration guidance
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)

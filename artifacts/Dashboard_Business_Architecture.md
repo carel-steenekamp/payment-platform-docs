@@ -1,3 +1,5 @@
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
+
 # Dashboard - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -411,3 +413,8 @@ SQL Server (Shared with Realtime)
 **Document Purpose**: Business and architectural reference for current system understanding
 **Audience**: Business stakeholders, solution architects, operations teams
 **Scope**: Functional capabilities, architectural patterns, strategic value (not implementation details)
+
+
+---
+
+[← Back to Platform Overview](../README.md) | [↑ Top](#)
