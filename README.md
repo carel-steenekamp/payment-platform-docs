@@ -1,331 +1,323 @@
-# Nexus Evolution - Business Architecture Documentation Repository
-## AI Agent Guide
+# Payment Platform - Business & Functional Overview
 
+Multi-tenant payment processing platform for retail operations handling transaction processing, financial reconciliation, compliance verification, and bulk disbursements.
+
+---
+
+## Platform Capabilities
+
+### Core Payment Processing
+
+The platform processes card payments, EFT transactions, airtime sales, vouchers, and bill payments through a multi-layered architecture providing provider abstraction, transaction resilience, and operational flexibility.
+
+**Business Value**:
+- Provider-agnostic processing enables competitive pricing
+- Zero transaction loss through store-and-forward queuing
+- Multi-tenant architecture supports diverse retail brands
+- Automated financial settlement reduces manual effort
+
+---
+
+## Component Documentation
+
+### Payment Processing Layer
+
+**[SwitchingAPI - POS Integration Library](SwitchingAPI_Business_Architecture.md)**
+
+Java library embedded in point-of-sale applications providing unified payment API.
+
+**Business Function**: Single integration point for POS vendors supporting multiple payment providers through configuration. Handles card payments, EFT, value-added services with local transaction queuing for network resilience.
+
+**Key Capabilities**:
+- Multi-provider abstraction (Electrum, ESP, Mercurius)
+- Store-and-forward resilience (H2 database)
+- Chain-specific business rules
+- Protocol translation and validation
+
+---
+
+**[OmniSocket - Store Gateway](OmniSocket_Business_Architecture.md)**
+
+Gateway service aggregating multiple POS terminals at store level.
+
+**Business Function**: Reduces network connection costs by pooling 8-20 terminals through shared provider connections. Provides store-level transaction queuing and dual connection failover for high availability.
+
+**Key Capabilities**:
+- Connection pooling and load balancing
+- SQLite-based store-and-forward
+- Dual connection failover
+- Protocol translation between POS and providers
+
+---
+
+**[Realtime (NexusV4) - Central Transaction Switch](Realtime_Business_Architecture.md)**
+
+Central orchestration platform coordinating enterprise-wide payment flow.
+
+**Business Function**: Plugin-based architecture routes transactions to appropriate suppliers/merchants with message-driven processing, hot-reload configuration, and circuit breakers for supplier isolation.
+
+**Key Capabilities**:
+- Plugin architecture for supplier integration
+- Message-driven processing (CausalNexus framework)
+- Hot-reload configuration updates
+- Circuit breakers and failure isolation
+- Transaction audit trail and monitoring
+
+---
+
+### Financial Operations
+
+**[ReconService - Automated Reconciliation](ReconService_Business_Architecture.md)**
+
+Financial reconciliation service matching transactions against bank statements.
+
+**Business Function**: Three-way matching between internal transactions, bank statements, and provider responses automates daily settlement. Suspense account management flags exceptions for investigation.
+
+**Key Capabilities**:
+- Three-way transaction matching
+- Bank statement scraping (Selenium automation)
+- Suspense account workflow
+- Scheduled report generation and email delivery
+- Exception identification and alerting
+
+---
+
+**[Pay2ID - Batch Payment Processing](Pay2ID_Business_Architecture.md)**
+
+Bulk payment processing for payroll and supplier disbursements via TymeBank.
+
+**Business Function**: Batch submission of hundreds/thousands of payments through single API call. Webhook notifications provide real-time status updates with Xero accounting integration for automated reconciliation.
+
+**Key Capabilities**:
+- Batch payment submission and tracking
+- Webhook notification handling
+- Xero accounting integration
+- Store-and-forward queuing for failed batches
+- OAuth token management
+
+---
+
+### Compliance & Security
+
+**[FSCA Verification - Regulatory Compliance](FSCA_Verification_Business_Architecture.md)**
+
+Financial advisor licensing verification against FSCA regulatory registry.
+
+**Business Function**: Bulk verification of business partners through web scraping of public FSCA data. Fuzzy matching handles name variations with confidence scoring. Identifies debarred individuals per regulatory requirements.
+
+**Key Capabilities**:
+- Web scraping of FSCA public registry
+- Lucene.NET full-text search with fuzzy matching
+- Bulk CSV/Excel verification
+- Debarred individual detection
+- Confidence-scored compliance reports
+
+---
+
+**[Cryptographic Services - HSM Integration](CryptographicServices_Business_Architecture.md)**
+
+PIN translation and cryptographic operations via Hardware Security Module.
+
+**Business Function**: PCI-DSS compliant cryptographic processing for secure multi-acquirer PIN routing. Hardware-backed operations ensure cryptographic keys never leave secure boundaries.
+
+**Key Capabilities**:
+- Hardware Security Module integration (Thales, Atalla)
+- PIN format translation between acquirers
+- EMV key derivation for chip cards
+- PCI-DSS Level 1 compliant key management
+- Secure cryptographic operation logging
+
+---
+
+### Operational Management
+
+**[Dashboard - Operations Portal](Dashboard_Business_Architecture.md)**
+
+Multi-tenant management and reporting interface.
+
+**Business Function**: Transaction monitoring, reporting, and administration across hierarchical merchant structure. Soft multi-tenancy with delegated permissions enables enterprise, chain, and store-level management.
+
+**Key Capabilities**:
+- Real-time transaction monitoring and search
+- Hierarchical user permissions (enterprise/chain/store)
+- Archive pattern for long-term data retention
+- Merchant configuration and administration
+- Self-service reporting
+
+---
+
+### Platform Integration
+
+**[MasscloudAPI - Subsumption Analysis](MasscloudAPI_Subsumption_Analysis.md)**
+
+Analysis of how standalone API functionality is encompassed within broader platform architecture.
+
+**Business Function**: Documents platform evolution from single-tenant standalone services to integrated multi-tenant platform, demonstrating architectural patterns for service consolidation.
+
+---
+
+## Proven Business Patterns
+
+### 1. Multi-Provider Abstraction
+
+Configuration-driven provider routing enables provider changes without code modification.
+
+**Business Value**: Eliminates vendor lock-in, enables competitive pricing, reduces integration effort for new providers.
+
+**Implementation**: SwitchingAPI, OmniSocket, Realtime, Pay2ID all abstract provider differences behind unified interfaces.
+
+---
+
+### 2. Store-and-Forward Resilience
+
+Failed transactions persist to local database and retry automatically.
+
+**Business Value**: Maintains business operations during network outages or provider unavailability. Zero transaction loss guarantees revenue capture.
+
+**Implementation**: Multi-tier approach with POS-level (H2), store-level (SQLite), and central (SQL Server) queuing.
+
+---
+
+### 3. Batch Processing with Reconciliation
+
+Large-volume transaction processing with automated matching.
+
+**Business Value**: Handles payroll disbursements and financial settlement with automated exception identification. Reduces manual reconciliation from weeks to same-day.
+
+**Implementation**: Pay2ID processes bulk payments, ReconService performs three-way matching, Dashboard provides reporting and monitoring.
+
+---
+
+### 4. Regulatory Compliance Verification
+
+Bulk verification against regulatory registries with fuzzy matching.
+
+**Business Value**: Validates business partner licensing, identifies debarred individuals, maintains regulatory compliance.
+
+**Implementation**: FSCA_Verification scrapes public registry, performs fuzzy name matching, generates confidence-scored compliance reports.
+
+---
+
+### 5. Cryptographic Operations with HSM
+
+Hardware-backed cryptographic processing with secure key boundaries.
+
+**Business Value**: Maintains PCI-DSS compliance, enables secure multi-acquirer routing, prevents fraud through cryptographic validation.
+
+**Implementation**: CryptographicServices integrates with HSMs for PIN translation, EMV key derivation, and encrypted data handling.
+
+---
+
+## Platform Architecture
+
+### Layered Structure
+
+**Edge Layer**: Terminal and store-level integration
+- SwitchingAPI (embedded in POS)
+- OmniSocket (store gateway)
+
+**Orchestration Layer**: Enterprise-wide coordination
+- Realtime/NexusV4 (central switch)
+
+**Operational Services**: Business support functions
+- Dashboard (management portal)
+- ReconService (financial reconciliation)
+- Pay2ID (batch payments)
+- FSCA_Verification (compliance verification)
+
+**Infrastructure Services**: Security and compliance
+- CryptographicServices (HSM operations)
+
+### Transaction Flow
+
+```
+POS Terminal → SwitchingAPI (embedded) → OmniSocket (store) → 
+Realtime (central) → Payment Provider → Response Chain
+```
+
+**Resilience**: Store-and-forward queuing at each layer ensures zero transaction loss.
+
+**Observability**: Complete audit trail from terminal to provider and back.
+
+---
+
+## Operational Characteristics
+
+**Transaction Types**:
+- Card payments (credit/debit)
+- Electronic funds transfer
+- Value-added services (airtime, vouchers, bill payments)
+- Batch disbursements (payroll, supplier payments)
+
+**Security Standards**:
+- PCI-DSS Level 1 compliance
+- Data privacy compliance
+- Regulatory requirements (FSCA, POPIA)
+
+**Deployment**:
+- Windows services (orchestration, operational services)
+- Web applications (dashboard, management)
+- Embedded libraries (POS integration)
+
+**Data Management**:
+- SQL Server (enterprise-level persistence)
+- SQLite (store-level queuing)
+- H2 (terminal-level queuing)
+
+---
+
+## Business Impact
+
+**Revenue Protection**:
+- Zero transaction loss during network outages
+- Automatic retry without staff intervention
+- Guaranteed transaction capture and processing
+
+**Operational Efficiency**:
+- Same-day financial settlement vs weeks of manual work
+- Automated compliance verification in minutes vs hours
+- Provider switching without POS software changes
+
+**Risk Mitigation**:
+- PCI-DSS Level 1 compliance through HSM integration
+- Regulatory compliance verification prevents banned partnerships
+- Multi-provider architecture eliminates vendor lock-in
+
+**Cost Optimization**:
+- Connection pooling reduces network costs
+- Competitive provider pricing through abstraction
+- Reduced manual effort in reconciliation and compliance
+
+---
+
+## Document Navigation
+
+**By Business Function**:
+- Payment processing → [SwitchingAPI](SwitchingAPI_Business_Architecture.md), [OmniSocket](OmniSocket_Business_Architecture.md), [Realtime](Realtime_Business_Architecture.md)
+- Financial operations → [ReconService](ReconService_Business_Architecture.md), [Pay2ID](Pay2ID_Business_Architecture.md)
+- Compliance → [FSCA Verification](FSCA_Verification_Business_Architecture.md), [Cryptographic Services](CryptographicServices_Business_Architecture.md)
+- Management → [Dashboard](Dashboard_Business_Architecture.md)
+
+**By Business Pattern**:
+- Provider abstraction → All payment processing components
+- Transaction resilience → [SwitchingAPI](SwitchingAPI_Business_Architecture.md), [OmniSocket](OmniSocket_Business_Architecture.md), [Realtime](Realtime_Business_Architecture.md)
+- Batch processing → [Pay2ID](Pay2ID_Business_Architecture.md), [ReconService](ReconService_Business_Architecture.md)
+- Compliance verification → [FSCA Verification](FSCA_Verification_Business_Architecture.md)
+- Cryptographic security → [Cryptographic Services](CryptographicServices_Business_Architecture.md)
+
+---
+
+## Coverage Status
+
+**Analyzed Components**: 9 of 15+ platform components
+
+**Edge Layer**: 2/2 complete (100%)
+**Orchestration Layer**: 1/3 complete (33%)
+**Operational Services**: 4/5 complete (80%)
+**Infrastructure Services**: 1/2 complete (50%)
+
+---
+
+**Analysis Focus**: Current operational capabilities and proven production patterns  
+**Intended Audience**: Business executives, product managers, compliance officers, solution architects  
 **Last Updated**: 2025-11-02
-**Purpose**: This repository contains business and architectural analysis documentation for the Nexus Evolution platform modernization program.
-
-**Documentation Focus**: Primary focus on current business, functional, and architectural state with brief notes on pattern applicability and reusability.
-
----
-
-## Backup Strategy
-
-**Backup Location**: D:\bma-backup\
-**Snapshot Naming**: `snapshot-[YYYY-MM-DD]_v[X.Y]`
-
-**AI Agent Instructions**:
-- Create snapshot when completing major milestones (new component analysis, framework updates)
-- Snapshot format: `cp -r /d/bma "/d/bma-backup/snapshot-[DATE]_v[VERSION]"`
-- Update this README with snapshot details
-
-**Snapshots Created**:
-- `snapshot-2025-01-02_v2.0` - Initial backup after Realtime and Dashboard analyses completed
-- `snapshot-2025-01-02_v2.1` - Updated with Office Service analysis, restructured documents
-- `snapshot-2025-11-02_v2.2` - Added Cryptographic Services stub
-- `snapshot-2025-11-02_v3.0` - Repository refocus: Separated patterns (current) from roadmap (future)
-- `snapshot-2025-11-02_v3.1` - README updated with actual state: 9 components analyzed
-
----
-
-## IMPORTANT: Directory Structure and Audience
-
-### artifacts/ - HUMAN CONSUMPTION ONLY
-**Audience**: Business executives, board members, external stakeholders
-**Format**: Markdown (.md)
-**Content**: Final, polished, business-focused architectural documentation
-
-**These are the ONLY documents intended for human stakeholders.**
-
-### context/ - AI AGENT CONTEXT ONLY
-**Audience**: AI agents (Claude, etc.) for future analysis sessions
-**Format**: Text (.txt), PDF
-**Content**: Technical context, code references, session notes, implementation details
-
-**Humans should NOT read these - they are AI working notes.**
-
-### framework/ - AI AGENT METHODOLOGY
-**Audience**: AI agents for understanding analysis approach
-**Format**: Text (.txt)
-**Content**: Program methodology, pattern libraries, analysis frameworks, migration planning
-
-**Documents**:
-- `Nexus_Evolution_Analysis_Framework.txt` - How to analyze components
-- `Architectural_Patterns_Library.txt` - Proven patterns from current systems (focus: current implementation)
-- `Nexus_Evolution_Roadmap.txt` - Migration strategy and planning (focus: future implementation)
-
-### templates/ - AI AGENT TEMPLATES
-**Audience**: AI agents for creating new analyses
-**Format**: Text (.txt)
-**Content**: Standard templates for component analysis
-
----
-
-## Repository Principles
-
-### Documentation Focus Balance
-
-**Primary (90%)**: Current system documentation
-- Business capabilities and value
-- Functional architecture
-- Operational characteristics
-- Proven patterns and approaches
-- Production-validated implementations
-
-**Secondary (10%)**: Pattern applicability
-- Brief notes on reusability (1-2 lines)
-- Where patterns could apply
-- Modern architectural equivalents
-
-**Separate**: Migration planning
-- Detailed in `Nexus_Evolution_Roadmap.txt`
-- Not mixed with pattern extraction
-
-### Document Separation of Concerns
-
-**Architectural_Patterns_Library.txt**:
-- What: Catalog of proven patterns from current systems
-- Focus: Current implementation and business value
-- Use: Understanding existing capabilities and IP
-
-**Nexus_Evolution_Roadmap.txt**:
-- What: Migration strategy and execution planning
-- Focus: Future implementation and modernization
-- Use: Planning platform evolution
-
----
-
-## For AI Agents: How to Use This Repository
-
-### When Starting a New Analysis Session
-
-1. **Read this README.md first** to understand repository structure
-2. **Check context/** for existing component analyses and code locations
-3. **Review framework/** to understand analysis methodology and pattern library
-4. **Use templates/** when creating new component documentation
-5. **Output final docs to artifacts/** (Markdown format only)
-6. **Update context/** with your working notes and findings (Text format only)
-
-### Document Format Rules
-
-- **artifacts/** = `.md` (Markdown) - Polished, business-focused
-- **context/** = `.txt` (Text) - Technical, code references, working notes
-- **framework/** = `.txt` (Text) - Program methodology
-- **templates/** = `.txt` (Text) - Analysis templates
-
-### Creating New Component Analysis
-
-1. **Explore codebase** and take notes in context/[Component]_context.txt
-   - Use templates/Context_File_Template.txt for structure
-   - Include code locations, line numbers, technical details
-2. **Follow template** from templates/Component_Analysis_Template.txt
-   - Structure business architecture document
-3. **Create business doc** as artifacts/[Component]_Business_Architecture.md
-   - Polished, business-focused, pattern-oriented
-4. **Update framework** to reflect new patterns discovered
-   - Use templates/Pattern_Addition_Guide.txt for workflow
-5. **Update this README** with new component status
-
----
-
-## Current Analysis Status
-
-### Components Analyzed: 9 of 15+
-
-**Edge Layer** (2/2):
-- ✅ SwitchingAPI - POS Integration Library (Java 7)
-- ✅ OmniSocket X - Store Gateway (C# .NET)
-
-**Orchestration Layer** (1/3):
-- ✅ Realtime (NexusV4) - Central Transaction Switch (C# .NET 9.0)
-- ⏳ Office Service - Credit Management (gRPC)
-- ⏳ Supplier Integration Framework
-
-**Operational Services Layer** (4/5):
-- ✅ Dashboard - Management Portal (ASP.NET Core 9.0 + Angular)
-- ✅ ReconService - Reconciliation Service
-- ✅ Pay2ID - Payment Service
-- ✅ FSCA_Verification - Verification Service
-- ⏳ Reporting & Analytics
-
-**Infrastructure Services Layer** (1/2):
-- ✅ Cryptographic Services - PIN Translation & HSM Integration (.NET Core 2.2)
-- ⏳ Monitoring & Health Services
-
-**Integration Analysis** (1):
-- ✅ MasscloudAPI - Subsumption Analysis
-
----
-
-## Artifacts Inventory (Human Stakeholder Documents)
-
-### Executive Summary
-- ⏳ `Executive_Summary.md` - Program overview and key findings [PENDING]
-
-### Component Business Architectures
-1. `SwitchingAPI_Business_Architecture.md` - Edge Layer: POS Library
-2. `OmniSocket_Business_Architecture.md` - Edge Layer: Store Gateway
-3. `Realtime_Business_Architecture.md` - Orchestration: Central Switch
-4. `Dashboard_Business_Architecture.md` - Operational: Management Portal
-5. `CryptographicServices_Business_Architecture.md` - Infrastructure: PIN Translation & HSM
-6. `ReconService_Business_Architecture.md` - Operational: Reconciliation Service
-7. `Pay2ID_Business_Architecture.md` - Operational: Payment Service
-8. `FSCA_Verification_Business_Architecture.md` - Operational: Verification Service
-9. `MasscloudAPI_Subsumption_Analysis.md` - Integration: Subsumption Analysis
-
-**Total**: 10 documents (1 summary [pending] + 9 component analyses)
-
----
-
-## Context Inventory (AI Agent Reference)
-
-### Technical Context Files
-- `OmniSocket_context.txt` - Code locations, session notes
-- `SwitchingAPI_context.txt` - Code locations, session notes
-- `Realtime_context.txt` - Code locations, session notes
-- `Dashboard_context.txt` - Code locations, session notes
-
-- `CryptographicServices_context.txt` - Code locations, session notes
-### Detailed Technical Analysis
-- `SwitchingAPI_Functional_Summary.txt` - Line-by-line code analysis
-
-**Total**: 6 documents
-
-**Note**: Context files for ReconService, Pay2ID, FSCA_Verification, and MasscloudAPI analyses pending creation.
-
----
-
-## Framework Inventory (AI Agent Methodology)
-
-### Analysis & Patterns (Current State Focus)
-- `Nexus_Evolution_Analysis_Framework.txt` - Component analysis methodology and program vision
-- `Architectural_Patterns_Library.txt` - Proven architectural patterns from current systems (17 patterns)
-  - **Scope**: Current implementation details with brief applicability notes
-  - **Purpose**: Catalog operational intellectual property and production-validated approaches
-
-### Migration Planning (Future State Focus)
-- `Nexus_Evolution_Roadmap.txt` - Migration strategy, sequencing, and execution planning
-  - **Scope**: Technology recommendations, success metrics, risk mitigation, component sequencing
-  - **Purpose**: Strategic planning for platform modernization
-
----
-
-## Templates Inventory (AI Agent Tools)
-
-- `Component_Analysis_Template.txt` - Standard structure for artifacts/*.md documents
-- `Context_File_Template.txt` - Standard structure for context/*.txt working notes
-- `Pattern_Addition_Guide.txt` - Workflow for updating framework pattern library
-
----
-
-## Pattern Library Status
-
-### Patterns Identified: 5 High-Value Business Patterns (from 9 components)
-
-1. **Multi-Provider Abstraction** - Eliminate vendor lock-in, rapid provider switching
-2. **Store-and-Forward Resilience** - Zero transaction loss, guaranteed revenue capture
-3. **Batch Processing with Reconciliation** - Automated settlement, operational efficiency
-4. **Regulatory Compliance Verification** - Automated due diligence, risk mitigation
-5. **Cryptographic Operations with HSM** - PCI-DSS compliance, secure processing
-
-**Focus**: Business value and proven operational impact, not technical implementation details
-
----
-
-## Technology Stack Overview
-|| Component | Language | Framework | Database | Deployment |
-|-----------|----------|-----------|----------|------------|
-| SwitchingAPI | Java 7 | Maven | H2 | Embedded Library |
-| OmniSocket | C# .NET | CausalNexus | SQLite | Windows Service |
-| Realtime | C# .NET 9.0 | CausalNexus | SQL Server | Windows Service |
-| Dashboard | C# .NET 9.0 | ABP Framework | SQL Server | Web App |
-| CryptographicServices | C# .NET Core 2.2 | CausalNexus | SQL Server | Windows Service |
-| ReconService | C# .NET 4.7.2 | CausalNexus | SQL Server | Windows Service |
-| Pay2ID | C# .NET 4.7.2 | CausalNexus | SQL Server | Windows Service |
-| FSCA_Verification | C# .NET 4.8 | ASP.NET MVC 5 | SQL Server | IIS + Windows Service |
-| MasscloudAPI | C# .NET 4.7.2 | CausalNexus | SQL Server | Windows Service |
-
----
-
-## AI Agent Instructions
-
-### Priority Rules
-1. **NEVER modify artifacts/** - These are final deliverables for humans
-2. **ALWAYS update context/** - Add your findings, code locations, session notes
-3. **Update framework/** when discovering new patterns
-4. **Create new artifacts/** only when completing full component analysis
-5. **Follow naming conventions** - .md for artifacts, .txt for context/framework
-
-### When Analyzing a Component
-1. Read framework/Nexus_Evolution_Analysis_Framework.txt
-2. Review existing context/ files for related components
-3. Create context/[Component]_context.txt as you explore
-4. Follow templates/Component_Analysis_Template.txt structure
-5. Create artifacts/[Component]_Business_Architecture.md when complete
-6. **Update framework/Architectural_Patterns_Library.txt with new patterns:**
-   - Add new patterns discovered to pattern library (focus on CURRENT implementation)
-   - Update existing pattern descriptions if refined
-   - Add component to pattern source list
-   - Keep applicability notes brief (1-2 lines)
-   - Update pattern count in this README
-7. Update this README.md with completion status (component count, status table)
-
-### Output Guidelines
-- **artifacts/**: Business-focused, pattern-oriented, no code details
-- **context/**: Code locations, technical specifics, implementation notes
-- Focus on CURRENT system architecture, business value, operational characteristics
-- Minimize future-state planning (brief pattern extraction notes only)
-
----
-
-## Quick Reference
-
-**For AI starting new session**: Read context/[Component]_context.txt files
-**For AI creating new analysis**: Use templates/Component_Analysis_Template.txt
-**For AI updating patterns**: Edit framework/Architectural_Patterns_Library.txt
-**For migration planning**: Refer to framework/Nexus_Evolution_Roadmap.txt
-**For humans**: Read artifacts/ folder ONLY
-
----
-
-## Version History
-
-**v1.0** (2025-11-02):
-- Initial framework: SwitchingAPI, OmniSocket
-- 8 patterns identified
-- Repository structure established
-
-**v2.0** (2025-01-02):
-- Added: Realtime, Dashboard analyses
-- 17 patterns identified
-- New structure: artifacts/ (human) vs context/ (AI)
-- Format convention: .md (final) vs .txt (working)
-
-**v3.0** (2025-11-02):
-- Repository refocused on current state (90%) with brief applicability notes (10%)
-- Created: Nexus_Evolution_Roadmap.txt for migration planning
-- Renamed: Next_Gen_Platform_Patterns.txt → Architectural_Patterns_Library.txt
-- Added: Context and Pattern templates
-- Framework documents: 3 (Analysis, Patterns, Roadmap)
-
-**v3.1** (2025-11-02):
-- README updated to reflect actual repository state
-- Added: ReconService, Pay2ID, FSCA_Verification, MasscloudAPI analyses
-- Component count updated: 5 → 9 analyzed
-- Total artifacts: 9 component analyses (Executive Summary pending)
-- Context files: 6 created (4 pending for new components)
-
----
-
-## Summary for AI Agents
-
-This repository separates **human-facing deliverables** (artifacts/) from **AI working context** (context/). When analyzing components:
-
-1. Use context/ to understand what's been analyzed
-2. Create new context/[Component]_context.txt as you work
-3. Output final artifacts/[Component]_Business_Architecture.md when complete
-4. Never assume humans will read context/ - it's for AI session continuity only
-
-**Current Status**: 9 components analyzed, 17 patterns identified, framework mature
-**Next Priority**: Executive Summary creation, Office Service, Supplier Integration Framework
-**Documentation Debt**: Context files needed for ReconService, Pay2ID, FSCA_Verification, MasscloudAPI
-
