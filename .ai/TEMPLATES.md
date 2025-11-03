@@ -94,7 +94,7 @@
 
 ---
 
-<div align="right"><a href="../INDEX.md">↑ Back to Index</a></div>
+<div align="right"><a href="../index.md">↑ Back to Index</a></div>
 ```
 
 ---
@@ -169,14 +169,14 @@
 
 ---
 
-<div align="right"><a href="../INDEX.md">↑ Back to Index</a></div>
+<div align="right"><a href="../index.md">↑ Back to Index</a></div>
 ```
 
 ---
 
-## INDEX.md Section Template
+## index.md Section Template
 
-**Use for**: Adding new section to INDEX.md index
+**Use for**: Adding new section to index.md index
 
 ```markdown
 ### [Section Name]
@@ -190,7 +190,7 @@
 
 ## Capabilities Index Entry Template
 
-**Use for**: Adding new capability to INDEX.md Capabilities Index
+**Use for**: Adding new capability to index.md Capabilities Index
 
 ```markdown
 | **[Capability Name]** | [Component] | [Description in business terms] | ✓ Production |

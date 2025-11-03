@@ -10,7 +10,7 @@
 
 ```
 D:\bma\
-├── INDEX.md                          # END-USER: Navigation index for business stakeholders
+├── index.md                          # END-USER: Navigation index for business stakeholders
 ├── docs/                         # END-USER: Detailed business analysis documents
 │   ├── *_Business_Architecture.md
 │   └── *_Analysis.md
@@ -25,7 +25,7 @@ D:\bma\
 ## File Roles
 
 ### End-User Content (Human Consumption)
-- **INDEX.md**: Navigation index with links and brief summaries
+- **index.md**: Navigation index with links and brief summaries
 - **docs/**: Complete business analysis documents
 
 ### AI Agent Meta Content (Machine Consumption)
@@ -38,10 +38,10 @@ D:\bma\
 ## Key Principles
 
 1. **Separation of Concerns**
-   - End-users read: INDEX.md + docs/
+   - End-users read: index.md + docs/
    - AI agents reference: .ai/
 
-2. **INDEX.md is End-User Facing**
+2. **index.md is End-User Facing**
    - It's a navigation tool, not AI instruction
    - Business stakeholders use it to find information
    - Keep it clean, professional, and business-focused
@@ -64,19 +64,19 @@ D:\bma\
 **Read First:**
 1. `.ai/CONTEXT.md` (this file) - Understand structure
 2. `.ai/CONTENT_GUIDELINES.md` - Learn content rules
-3. `INDEX.md` - See current end-user navigation
+3. `index.md` - See current end-user navigation
 4. Existing artifacts - Study patterns
 
 **Before Making Changes:**
 1. Determine if content is end-user or AI meta
 2. Follow hierarchy: Business → Strategic → Technical
 3. Use toned-down language (no hype)
-4. Keep INDEX.md brief (index only)
+4. Keep index.md brief (index only)
 5. Put detailed content in docs/
 
 **Never:**
-- Mix AI instructions into INDEX.md or docs/
-- Embed detailed content in INDEX.md
+- Mix AI instructions into index.md or docs/
+- Embed detailed content in index.md
 - Put end-user content in .ai/
 - Use hyperbolic language or specific percentages
 
@@ -86,16 +86,16 @@ D:\bma\
 
 **Adding new component?**
 → Create `docs/ComponentName_Business_Architecture.md`
-→ Add link in INDEX.md under appropriate section
+→ Add link in index.md under appropriate section
 → See `.ai/CONTENT_GUIDELINES.md` for details
 
 **Updating existing content?**
 → Edit the artifact directly
-→ Update INDEX.md summary only if major change
+→ Update index.md summary only if major change
 
 **Adding AI instructions?**
 → Add to `.ai/` directory
-→ Never in INDEX.md or docs/
+→ Never in index.md or docs/
 
 ---
 

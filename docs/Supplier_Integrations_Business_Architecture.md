@@ -91,4 +91,4 @@ All supplier integrations implemented as plugin modules within the Realtime Swit
 
 ---
 
-<div align="right"><a href="INDEX.md">↑ Back to Index</a></div>
+<div align="right"><a href="index.md">↑ Back to Index</a></div>
