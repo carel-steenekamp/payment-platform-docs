@@ -1,3 +1,5 @@
+[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
 <a name="top"></a>
 
 # Block Markets Africa - Business & Strategic Analysis
