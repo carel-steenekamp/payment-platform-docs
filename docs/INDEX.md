@@ -6,7 +6,7 @@
 
 **Strategic positioning** as merchant gateway for blockchain integration with Block Markets Africa's regulated OpenRUN infrastructure, bridging traditional payment rails with tokenized assets, cross-border settlement, and smart contract automation.
 
-**Last Updated**: 2025-11-03
+**Last Updated**: 2025-01-03
 
 ---
 
