@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # Dashboard - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -9,6 +11,8 @@
 **Last Updated**: 2025-01-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Overview
 Dashboard is the comprehensive operational management portal for the Nexus Evolution platform, providing transaction monitoring, merchant/supplier configuration, reporting/analytics, and system administration. Built on ABP Framework (ASP.NET Core + Angular), it serves as the centralized control plane for all stakeholders involved in payment operations.
@@ -188,6 +192,8 @@ Dashboard is the comprehensive operational management portal for the Nexus Evolu
 - Real-time and batch transaction correlation
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Key Architectural Patterns
 
@@ -275,6 +281,8 @@ Dashboard demonstrates **operational management patterns** that inform next-gen 
 - **Caching Strategy**: Memory caching for dashboard performance without external dependencies
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Deployment Models
 
@@ -291,6 +299,8 @@ SQL Server (Shared with Realtime)
 ```
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Workflows
 
@@ -343,6 +353,8 @@ SQL Server (Shared with Realtime)
 6. Confirmation displayed in Dashboard file transfer screen
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Integration Points
 
@@ -374,6 +386,8 @@ SQL Server (Shared with Realtime)
   - Import source mapping synchronization
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Operational Characteristics
 
@@ -399,6 +413,8 @@ SQL Server (Shared with Realtime)
 - PAN masking in logs/UI
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary: Strategic Recommendations
 
@@ -409,6 +425,8 @@ SQL Server (Shared with Realtime)
 **For Product Owners**: Current capabilities support full operational lifecycle with multi-tenant isolation. Fuel rebate management demonstrates domain-specific workflow customization. Reconciliation management shows extensibility for industry-specific operational requirements (retail, hospitality, etc.).
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## BMA Blockchain Integration
 
@@ -452,6 +470,8 @@ Dashboard extends to blockchain operations management:
 **Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#integration-capabilities)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural reference for current system understanding
 **Audience**: Business stakeholders, solution architects, operations teams
@@ -461,4 +481,6 @@ Dashboard extends to blockchain operations management:
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 

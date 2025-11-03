@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # SwitchingAPI - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -9,6 +11,8 @@
 **Last Updated**: 2025-11-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Overview
 SwitchingAPI is a payment gateway abstraction layer that provides Massmart retail POS systems with unified access to multiple payment networks - traditional card payments (EFT) via Postilion and digital payment services (VAS) via Electrum/Mercurius platforms.
@@ -244,6 +248,8 @@ Store Network
 - Open banking and instant payment integration
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary: Strategic Recommendations
 
@@ -263,6 +269,8 @@ Store Network
 - Cloud-native approach enables faster innovation cycles and cost optimization
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural reference for next-generation platform planning
 **Audience**: Business stakeholders, solution architects, product managers
@@ -271,4 +279,6 @@ Store Network
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 

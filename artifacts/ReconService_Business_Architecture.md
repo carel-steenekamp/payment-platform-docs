@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # Reconciliation Service - Business & Architectural Overview
 
 **Component**: Reconciliation Service (Massmart)  
@@ -7,6 +9,8 @@
 **Last Updated**: 2025-11-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Executive Overview
 
@@ -23,6 +27,8 @@ The Reconciliation Service provides automated transaction reconciliation and fin
 - **Operational Monitoring**: Proactive file monitoring with SMS and voice call alerting
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Role in Next-Generation Architecture
 
@@ -45,6 +51,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **File-Based Integration**: Polling file watchers for zero-infrastructure data exchange
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Functional Overview
 
@@ -107,6 +115,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **Template Support**: HTML email formatting for professional presentation
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## High-Level Architecture
 
@@ -230,6 +240,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
   - Stored procedure invocation
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Capabilities
 
@@ -373,6 +385,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - Empowers operations teams with self-service configuration
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Operational Characteristics
 
@@ -408,6 +422,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **Environment Variables**: Runtime configuration via environment variables
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Key Architectural Patterns
 
@@ -421,6 +437,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 8. **Message-Driven Integration**: CausalNexus framework for real-time transaction processing
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Integration Points
 
@@ -446,6 +464,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **Twilio API**: SMS and voice call services for monitoring alerts
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Technology Assessment
 
@@ -473,6 +493,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **Windows-Only**: WinSCP library and Windows Service limit cross-platform deployment
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Strategic Recommendations
 
@@ -525,6 +547,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - Establish escalation procedures for monitoring alerts
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Known Constraints
 
@@ -546,6 +570,8 @@ Reconciliation Service demonstrates **data integration and reporting patterns** 
 - **Database Bottleneck**: Single SQL Server instance for all operations
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Next Steps for Analysis
 
@@ -561,6 +587,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 8. **Pattern Extraction**: Document reusable reconciliation patterns for next-gen platform
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Related Documentation
 
@@ -578,6 +606,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 - **Platform Patterns**: `framework/Next_Gen_Platform_Patterns.txt`
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Document Metadata
 
@@ -591,6 +621,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 - v0.1 (2025-11-02): Initial stub created based on ReconService codebase
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary
 
@@ -599,6 +631,8 @@ Reconciliation Service provides automated transaction reconciliation and financi
 **Key Value**: Data integration and reconciliation infrastructure enabling automated settlement processing and financial reporting across diverse retail payment channels.
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural stub for future analysis  
 **Audience**: Business stakeholders, solution architects, operations teams  
@@ -608,4 +642,6 @@ Reconciliation Service provides automated transaction reconciliation and financi
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 

@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # OmniSocket X - Business & Architectural Context
 ## Nexus Evolution Component Analysis
 
@@ -9,6 +11,8 @@
 **Last Updated**: 2025-11-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Overview
 OmniSocket X is a multi-lane payment gateway service that sits between retail POS terminals and payment networks, providing intelligent transaction routing, protocol translation, and high-availability connection management for both card payments (EFT) and digital services (VAS).
@@ -386,6 +390,8 @@ Regional Cloud
 - **Next-Gen**: Unified cloud-native gateway combining best patterns from both
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary: Strategic Recommendations
 
@@ -405,6 +411,8 @@ Regional Cloud
 - Real-time analytics and dynamic routing unlock cost optimization opportunities
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural reference for next-generation platform planning
 **Audience**: Business stakeholders, solution architects, product managers
@@ -413,4 +421,6 @@ Regional Cloud
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 

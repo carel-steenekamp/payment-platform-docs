@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # Cryptographic Services - Business & Architectural Overview
 
 **Component**: PIN Translation & Cryptographic Services
@@ -7,6 +9,8 @@
 **Last Updated**: 2025-11-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Executive Overview
 
@@ -22,6 +26,8 @@ The Cryptographic Services component provides secure PIN translation capabilitie
 - **Automatic Key Management**: Dynamic BDK (Base Derivation Key) selection across terminal fleets
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Role in Next-Generation Architecture
 
@@ -42,6 +48,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **Compliance Focus**: All PIN operations routed through certified HSM
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Functional Overview
 
@@ -85,6 +93,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - Support for multiple terminal suppliers and acquirer configurations
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## High-Level Architecture
 
@@ -156,6 +166,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - Supports terminal fleet management
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Business Capabilities
 
@@ -257,6 +269,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - Reduces costs for non-production environments
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Operational Characteristics
 
@@ -295,6 +309,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **Vendor Independence**: Provider abstraction enables HSM vendor changes without service code changes
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Key Architectural Patterns
 
@@ -305,6 +321,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 5. **Message-Driven Architecture**: CausalNexus framework for routing and logging
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Integration Points
 
@@ -323,6 +341,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **JSON Source Node**: Message routing infrastructure
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Technology Assessment
 
@@ -346,6 +366,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **Key Storage**: XML containers (non-standard format)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Strategic Recommendations
 
@@ -381,6 +403,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **Audit Enhancement**: Ensure full transaction logging for compliance reviews
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Known Constraints
 
@@ -399,6 +423,8 @@ Cryptographic Services demonstrates **security infrastructure patterns** critica
 - **Framework Dependency**: CausalNexus coupling limits portability
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Next Steps for Analysis
 
@@ -412,6 +438,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 6. **Pattern Extraction**: Document reusable cryptographic service patterns for next-gen platform
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Related Documentation
 
@@ -428,6 +456,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 - **Platform Patterns**: `framework/Next_Gen_Platform_Patterns.txt`
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Document Metadata
 
@@ -441,6 +471,8 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 - v0.1 (2025-11-02): Initial stub created based on PinTranslationService codebase
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary
 
@@ -449,6 +481,8 @@ Cryptographic Services provides PCI-DSS compliant PIN translation capabilities t
 **Key Value**: Security infrastructure enabling compliant payment processing across multiple card issuers and terminal suppliers.
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural stub for future analysis
 **Audience**: Business stakeholders, solution architects, security officers
@@ -457,4 +491,6 @@ Cryptographic Services provides PCI-DSS compliant PIN translation capabilities t
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 

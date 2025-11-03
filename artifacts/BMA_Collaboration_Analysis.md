@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # BMA Collaboration Analysis: Nexus Evolution as Merchant Gateway
 ## Strategic Touchpoints, Complementarities, and Synergies
 
@@ -8,6 +10,8 @@
 **Status**: Strategic Collaboration Architecture
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Executive Summary
 
@@ -19,6 +23,8 @@ The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstra
 - **Combined Value**: Traditional payment UX with blockchain settlement benefits
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Strategic Context
 
@@ -60,6 +66,8 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 - OAuth 2.0 merchant authentication
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Collaboration Architecture: Nexus Evolution as BMA Merchant Gateway
 
@@ -129,6 +137,8 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 ```
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Touchpoint Analysis: Component-by-Component
 
@@ -203,6 +213,8 @@ WebMerchant → BMA Enterprise API
 - **Reconciliation**: Standard Frame generation for blockchain transactions
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 2. Realtime Switch ↔ BMA Blockchain Settlement
 
@@ -343,6 +355,8 @@ Merchant Balance → Query BMA wallet in real-time
 - **Multi-Tenant**: Aggregator-based isolation applies to blockchain wallets
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 3. Dashboard ↔ BMA Wallet Management
 
@@ -445,6 +459,8 @@ New reports:
 - **Replication**: Active-Active sync includes blockchain wallet mappings
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 4. Cryptographic Services ↔ BMA Smart KYC NFTs
 
@@ -524,6 +540,8 @@ BMA Wallet Authorization:
 - **Regulatory Compliance**: PIN operations meet banking security standards
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 5. Pay2ID Batch Processing ↔ BMA Tokenized Distributions
 
@@ -613,6 +631,8 @@ BMA Blockchain:
 - **Multi-Supplier**: BMA becomes another "supplier" in routing logic
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 6. OmniSocket Legacy Gateway ↔ BMA Terminal Integration
 
@@ -683,6 +703,8 @@ BMA Blockchain:
 - **Offline Queue**: Store-and-forward for blockchain during outages
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ### 7. ReconService ↔ BMA Blockchain Reconciliation
 
@@ -760,6 +782,8 @@ SFTP Delivery:
 - **SFTP Integration**: Existing secure file transfer extends to BMA
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Strategic Business Capabilities Matrix
 
@@ -779,6 +803,8 @@ SFTP Delivery:
 | **Multi-Tenant** | Aggregator-based isolation | FSP three-tier model | Shared infrastructure, isolated operations |
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Value Proposition for Key Stakeholders
 
@@ -846,6 +872,8 @@ With Integration: BMA onboards 500 merchants via single integration
 - **Cross-Border**: Send money internationally via wallet (instant, low-cost)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Technical Collaboration Requirements
 
@@ -961,6 +989,8 @@ BMA Integration Settings:
 ```
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Risk Analysis & Mitigation
 
@@ -995,6 +1025,8 @@ BMA Integration Settings:
 | **Fraud Detection** | New fraud patterns with wallets | ML-based fraud detection, transaction limits |
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Implementation Roadmap
 
@@ -1065,6 +1097,8 @@ BMA Integration Settings:
 - Merchant blockchain revenue > 10% of total
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary: Strategic Fit & Synergies
 
@@ -1105,6 +1139,8 @@ BMA Integration Settings:
 5. **Shared Compliance**: PCI-DSS + FSCA = comprehensive regulatory coverage
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Related Documentation
 
@@ -1124,6 +1160,8 @@ BMA Integration Settings:
 - **[Platform Overview](../README.md)**: Complete Nexus Evolution documentation index
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Strategic integration analysis for business and technical stakeholders  
 **Audience**: C-level executives, solution architects, product managers, business analysts  
@@ -1132,3 +1170,5 @@ BMA Integration Settings:
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>

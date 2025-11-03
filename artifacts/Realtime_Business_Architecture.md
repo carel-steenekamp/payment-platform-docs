@@ -1,5 +1,7 @@
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
 
+<a name="top"></a>
+
 # Realtime Switch (NexusV4) - Business & Architectural Overview
 
 **Component**: Realtime Transaction Switch
@@ -7,6 +9,8 @@
 **Last Updated**: 2025-01-02
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Executive Overview
 
@@ -27,6 +31,8 @@ Realtime is the central transaction orchestration engine that connects multiple 
 - **Operational Maturity**: Hot-reload configuration, comprehensive health monitoring, HSM security
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Role in Next-Generation Architecture
 
@@ -51,6 +57,8 @@ Realtime Switch demonstrates **central orchestration patterns** that can inform 
 - **Comprehensive Audit**: Full request/response payload storage enables troubleshooting and compliance
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Functional Overview
 
@@ -110,6 +118,8 @@ Realtime Switch demonstrates **central orchestration patterns** that can inform 
 - Hot-reload without service restart
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Architectural Overview
 
@@ -285,6 +295,8 @@ private void LoadSettings(FlashSettings settings) {
 - Credit back merchant balance via Office gRPC (if debited)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Functional Capabilities
 
@@ -328,6 +340,8 @@ private void LoadSettings(FlashSettings settings) {
 - **Netman**: Network management (handshakes, echo tests)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Architectural Details
 
@@ -445,6 +459,8 @@ Supplier Module (e.g., Flash)
 - Replication table tracks changes for Active-Active sync
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Operational Characteristics
 
@@ -471,6 +487,8 @@ Supplier Module (e.g., Flash)
 - Capacity: 1000+ TPS achievable with hardware upgrades
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Key Architecture Patterns
 
@@ -485,6 +503,8 @@ Supplier Module (e.g., Flash)
 9. **Active-Active HA**: Dual-node replication
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Technical Considerations
 
@@ -495,6 +515,8 @@ Supplier Module (e.g., Flash)
 - **Port Management**: Fixed port assignments per module
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## BMA Blockchain Integration
 
@@ -527,6 +549,8 @@ Realtime Switch extends to blockchain settlement through a new **BMA Blockchain 
 **Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#a-new-supplier-module-bma-blockchain-supplier)
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 ## Summary
 
@@ -537,6 +561,8 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 **Strategic Value**: Demonstrates proven patterns for multi-channel acquisition, multi-provider routing, comprehensive resilience, and operational maturity at enterprise scale.
 
 ---
+<div align="right"><a href="#top">↑ Back to Top</a></div>
+
 
 **Document Purpose**: Business and architectural reference for current system
 **Audience**: Business stakeholders, solution architects, operations teams
@@ -546,4 +572,6 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 ---
 
 [← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md) | [Collaboration Strategy](BMA_Collaboration_Analysis.md) | [↑ Top](#)
+
+<a name="top"></a>
 
