@@ -1,6 +1,7 @@
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
-
 <a name="top"></a>
+
+[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
 
 # Reconciliation Service - Business & Architectural Overview
 
@@ -641,7 +642,8 @@ Reconciliation Service provides automated transaction reconciliation and financi
 
 ---
 
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
-
 <a name="top"></a>
+
+[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
 

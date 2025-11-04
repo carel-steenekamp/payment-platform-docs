@@ -1,6 +1,7 @@
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
-
 <a name="top"></a>
+
+[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
 
 # Realtime Switch (NexusV4) - Business & Architectural Overview
 
@@ -571,7 +572,8 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 
 ---
 
-[← Platform Overview](../README.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
-
 <a name="top"></a>
+
+[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
 

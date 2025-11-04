@@ -1,3 +1,8 @@
+<a name="top"></a>
+
+[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+
+
 # Supplier Integrations - Business Architecture
 
 **Last Updated**: 2025-11-03
