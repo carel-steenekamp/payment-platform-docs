@@ -14,17 +14,17 @@
 
 ### Business/Product Capabilities
 - **[Capabilities Index](#capabilities-index)** - Complete capability-by-capability breakdown with status
-- **[Supplier Integrations](Supplier_Integrations_Business_Architecture.md)** - Business overview of 13+ payment service providers
+- **[Supplier Integrations](Supplier_Integrations_Business_Architecture)** - Business overview of 13+ payment service providers
 - **[Business Impact](#business-impact)** - Revenue protection, operational efficiency, risk mitigation
 - **[Component Documentation](#component-documentation)** - Detailed specifications by business function
 
 ### Strategic Opportunities
 - **[BMA Ecosystem Partnership](#strategic-opportunities-block-markets-africa-ecosystem)** - Collaboration opportunities with Block Markets Africa
-- **[OpenFMI Analysis](Block_Markets_Africa_Analysis.md)** - Deep dive into BMA's Open Financial Market Infrastructure
+- **[OpenFMI Analysis](Block_Markets_Africa_Analysis)** - Deep dive into BMA's Open Financial Market Infrastructure
 
 ### Technical Architecture
 - **[Platform Architecture](#platform-architecture)** - Layered architecture, technology stack
-- **[Technical Integration Details](BMA_Collaboration_Analysis.md)** - Component-level collaboration architecture
+- **[Technical Integration Details](BMA_Collaboration_Analysis)** - Component-level collaboration architecture
 
 ---
 
@@ -137,19 +137,19 @@ POS Terminal → SwitchingAPI → OmniSocket → Realtime → Provider → Respo
 
 ### Payment Processing Layer
 
-**[SwitchingAPI - POS Integration Library](SwitchingAPI_Business_Architecture.md)**
+**[SwitchingAPI - POS Integration Library](SwitchingAPI_Business_Architecture)**
 
 Java library embedded in POS applications. Single integration point for multiple payment providers (Electrum, ESP, Mercurius) with H2 store-and-forward and chain-specific business rules.
 
 ---
 
-**[OmniSocket - Store Gateway](OmniSocket_Business_Architecture.md)**
+**[OmniSocket - Store Gateway](OmniSocket_Business_Architecture)**
 
 Aggregates 8-20 POS terminals at store level with SQLite store-and-forward, connection pooling, and dual connection failover.
 
 ---
 
-**[Realtime (NexusV4) - Central Transaction Switch](Realtime_Business_Architecture.md)**
+**[Realtime (NexusV4) - Central Transaction Switch](Realtime_Business_Architecture)**
 
 Central orchestration with plugin architecture for supplier integration. Message-driven processing, hot-reload configuration, circuit breakers, and complete transaction audit trail.
 
@@ -159,13 +159,13 @@ Central orchestration with plugin architecture for supplier integration. Message
 
 ### Financial Operations
 
-**[ReconService - Automated Reconciliation](ReconService_Business_Architecture.md)**
+**[ReconService - Automated Reconciliation](ReconService_Business_Architecture)**
 
 Three-way matching (transactions/bank/provider) automates daily settlement. Bank statement scraping, suspense workflow, scheduled reports, and exception alerting.
 
 ---
 
-**[Pay2ID - Batch Payment Processing](Pay2ID_Business_Architecture.md)**
+**[Pay2ID - Batch Payment Processing](Pay2ID_Business_Architecture)**
 
 Bulk payroll/supplier disbursements via TymeBank. Batch submission, webhook notifications, Xero integration, OAuth token management.
 
@@ -175,13 +175,13 @@ Bulk payroll/supplier disbursements via TymeBank. Batch submission, webhook noti
 
 ### Compliance & Security
 
-**[FSCA Verification - Regulatory Compliance](FSCA_Verification_Business_Architecture.md)**
+**[FSCA Verification - Regulatory Compliance](FSCA_Verification_Business_Architecture)**
 
 Bulk verification of financial advisors against FSCA registry. Web scraping, Lucene.NET fuzzy matching with confidence scoring, debarred individual detection.
 
 ---
 
-**[Cryptographic Services - HSM Integration](CryptographicServices_Business_Architecture.md)**
+**[Cryptographic Services - HSM Integration](CryptographicServices_Business_Architecture)**
 
 PCI-DSS Level 1 compliant cryptographic operations via HSM (Thales, Atalla). PIN translation, EMV key derivation, secure key management.
 
@@ -191,7 +191,7 @@ PCI-DSS Level 1 compliant cryptographic operations via HSM (Thales, Atalla). PIN
 
 ### Operational Management
 
-**[Dashboard - Operations Portal](Dashboard_Business_Architecture.md)**
+**[Dashboard - Operations Portal](Dashboard_Business_Architecture)**
 
 Multi-tenant management with hierarchical permissions (enterprise/chain/store). Real-time monitoring, archive pattern, merchant administration, self-service reporting.
 
@@ -201,7 +201,7 @@ Multi-tenant management with hierarchical permissions (enterprise/chain/store). 
 
 ### Platform Integration
 
-**[MasscloudAPI - Subsumption Analysis](MasscloudAPI_Subsumption_Analysis.md)**
+**[MasscloudAPI - Subsumption Analysis](MasscloudAPI_Subsumption_Analysis)**
 
 Platform evolution analysis: single-tenant standalone to integrated multi-tenant architecture.
 
@@ -344,17 +344,17 @@ POS embedded library enables blockchain payments at checkout:
 
 | Nexus Component | BMA Integration Point | Collaboration Details |
 |-----------------|----------------------|-----------------------|
-| **WebMerchant API** | BMA Enterprise APIs | [OAuth 2.0, blockchain products, balance management](BMA_Collaboration_Analysis.md#1-webmerchant-api--bma-enterprise-apis) |
-| **Realtime Switch** | Blockchain Settlement | [BMA supplier module, state machine, transaction hash](BMA_Collaboration_Analysis.md#2-realtime-switch--bma-blockchain-settlement) |
-| **Dashboard** | Wallet Management | [Merchant onboarding, dual balances, explorer links](BMA_Collaboration_Analysis.md#3-dashboard--bma-wallet-management) |
-| **Cryptographic Services** | Smart KYC NFTs | [HSM key management, encrypted credentials](BMA_Collaboration_Analysis.md#4-cryptographic-services--bma-smart-kyc-nfts) |
-| **Pay2ID** | Tokenized Distributions | [Bulk blockchain transfers, smart contract rebates](BMA_Collaboration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions) |
-| **OmniSocket** | Terminal Integration | [QR/NFC wallets, tokenized loyalty at POS](BMA_Collaboration_Analysis.md#6-omnisocket-legacy-gateway--bma-terminal-integration) |
-| **ReconService** | Blockchain Reconciliation | [Three-way matching, real-time balance, settlement export](BMA_Collaboration_Analysis.md#7-reconservice--bma-blockchain-reconciliation) |
+| **WebMerchant API** | BMA Enterprise APIs | [OAuth 2.0, blockchain products, balance management](BMA_Collaboration_Analysis#1-webmerchant-api--bma-enterprise-apis) |
+| **Realtime Switch** | Blockchain Settlement | [BMA supplier module, state machine, transaction hash](BMA_Collaboration_Analysis#2-realtime-switch--bma-blockchain-settlement) |
+| **Dashboard** | Wallet Management | [Merchant onboarding, dual balances, explorer links](BMA_Collaboration_Analysis#3-dashboard--bma-wallet-management) |
+| **Cryptographic Services** | Smart KYC NFTs | [HSM key management, encrypted credentials](BMA_Collaboration_Analysis#4-cryptographic-services--bma-smart-kyc-nfts) |
+| **Pay2ID** | Tokenized Distributions | [Bulk blockchain transfers, smart contract rebates](BMA_Collaboration_Analysis#5-pay2id-batch-processing--bma-tokenized-distributions) |
+| **OmniSocket** | Terminal Integration | [QR/NFC wallets, tokenized loyalty at POS](BMA_Collaboration_Analysis#6-omnisocket-legacy-gateway--bma-terminal-integration) |
+| **ReconService** | Blockchain Reconciliation | [Three-way matching, real-time balance, settlement export](BMA_Collaboration_Analysis#7-reconservice--bma-blockchain-reconciliation) |
 
-**Complete Collaboration Architecture**: [Nexus Evolution as BMA Merchant Gateway](BMA_Collaboration_Analysis.md)
+**Complete Collaboration Architecture**: [Nexus Evolution as BMA Merchant Gateway](BMA_Collaboration_Analysis)
 
-**BMA OpenFMI Analysis**: [Block Markets Africa Business Analysis](Block_Markets_Africa_Analysis.md)
+**BMA OpenFMI Analysis**: [Block Markets Africa Business Analysis](Block_Markets_Africa_Analysis)
 
 <div align="right"><a href="#top">↑ Back to Top</a></div>
 
@@ -363,17 +363,17 @@ POS embedded library enables blockchain payments at checkout:
 ## Additional Navigation
 
 ### By Business Function
-- **Payment processing** → [SwitchingAPI](SwitchingAPI_Business_Architecture.md), [OmniSocket](OmniSocket_Business_Architecture.md), [Realtime](Realtime_Business_Architecture.md)
-- **Financial operations** → [ReconService](ReconService_Business_Architecture.md), [Pay2ID](Pay2ID_Business_Architecture.md)
-- **Compliance** → [FSCA Verification](FSCA_Verification_Business_Architecture.md), [Cryptographic Services](CryptographicServices_Business_Architecture.md)
-- **Management** → [Dashboard](Dashboard_Business_Architecture.md)
+- **Payment processing** → [SwitchingAPI](SwitchingAPI_Business_Architecture), [OmniSocket](OmniSocket_Business_Architecture), [Realtime](Realtime_Business_Architecture)
+- **Financial operations** → [ReconService](ReconService_Business_Architecture), [Pay2ID](Pay2ID_Business_Architecture)
+- **Compliance** → [FSCA Verification](FSCA_Verification_Business_Architecture), [Cryptographic Services](CryptographicServices_Business_Architecture)
+- **Management** → [Dashboard](Dashboard_Business_Architecture)
 
 ### By Business Pattern
 - **Provider abstraction** → All payment processing components
-- **Transaction resilience** → [SwitchingAPI](SwitchingAPI_Business_Architecture.md), [OmniSocket](OmniSocket_Business_Architecture.md), [Realtime](Realtime_Business_Architecture.md)
-- **Batch processing** → [Pay2ID](Pay2ID_Business_Architecture.md), [ReconService](ReconService_Business_Architecture.md)
-- **Compliance verification** → [FSCA Verification](FSCA_Verification_Business_Architecture.md)
-- **Cryptographic security** → [Cryptographic Services](CryptographicServices_Business_Architecture.md)
+- **Transaction resilience** → [SwitchingAPI](SwitchingAPI_Business_Architecture), [OmniSocket](OmniSocket_Business_Architecture), [Realtime](Realtime_Business_Architecture)
+- **Batch processing** → [Pay2ID](Pay2ID_Business_Architecture), [ReconService](ReconService_Business_Architecture)
+- **Compliance verification** → [FSCA Verification](FSCA_Verification_Business_Architecture)
+- **Cryptographic security** → [Cryptographic Services](CryptographicServices_Business_Architecture)
 
 <div align="right"><a href="#top">↑ Back to Top</a></div>
 

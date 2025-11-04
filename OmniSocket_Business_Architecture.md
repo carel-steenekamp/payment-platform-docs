@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 
 # OmniSocket X - Business & Architectural Context
@@ -423,6 +423,6 @@ Regional Cloud
 
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 

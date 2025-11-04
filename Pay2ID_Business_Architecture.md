@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 
 # Pay2ID Batch Payment Processing - Business & Architectural Overview
@@ -608,7 +608,7 @@ This is a **stub document** for future elaboration. Recommended areas for deep-d
 
 ## BMA Blockchain Integration
 
-**Integration Touchpoint**: [Pay2ID ↔ BMA Tokenized Distributions](BMA_PaymentSwitch_Integration_Analysis.md#5-pay2id-batch-processing--bma-tokenized-distributions)
+**Integration Touchpoint**: [Pay2ID ↔ BMA Tokenized Distributions](BMA_PaymentSwitch_Integration_Analysis#5-pay2id-batch-processing--bma-tokenized-distributions)
 
 ### Pay2ID as Blockchain Batch Processor
 
@@ -643,7 +643,7 @@ Pay2ID extends to blockchain bulk operations:
 - Transparency (blockchain explorer for all distributions)
 - Smart contract automation (eliminate manual processing)
 
-**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#integration-use-cases)
+**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis#integration-use-cases)
 
 ---
 <div align="right"><a href="#top">↑ Back to Top</a></div>
@@ -683,6 +683,6 @@ Pay2ID provides batch payment processing for TymeBank Pay2ID disbursements with 
 
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 

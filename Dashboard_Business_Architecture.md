@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 
 # Dashboard - Business & Architectural Context
@@ -431,7 +431,7 @@ SQL Server (Shared with Realtime)
 
 ## BMA Blockchain Integration
 
-**Integration Touchpoint**: [Dashboard ↔ BMA Wallet Management](BMA_PaymentSwitch_Integration_Analysis.md#3-dashboard--bma-wallet-management)
+**Integration Touchpoint**: [Dashboard ↔ BMA Wallet Management](BMA_PaymentSwitch_Integration_Analysis#3-dashboard--bma-wallet-management)
 
 ### Dashboard as Blockchain Operations Portal
 
@@ -468,7 +468,7 @@ Dashboard extends to blockchain operations management:
 - Existing audit logging captures blockchain operations
 - Zero UI disruption for operations teams
 
-**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#integration-capabilities)
+**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis#integration-capabilities)
 
 ---
 <div align="right"><a href="#top">↑ Back to Top</a></div>
@@ -483,6 +483,6 @@ Dashboard extends to blockchain operations management:
 
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 

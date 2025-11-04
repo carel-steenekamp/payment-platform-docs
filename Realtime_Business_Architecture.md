@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 
 # Realtime Switch (NexusV4) - Business & Architectural Overview
@@ -521,7 +521,7 @@ Supplier Module (e.g., Flash)
 
 ## BMA Blockchain Integration
 
-**Integration Touchpoint**: [Realtime Switch ↔ BMA Blockchain Settlement](BMA_PaymentSwitch_Integration_Analysis.md#2-realtime-switch--bma-blockchain-settlement)
+**Integration Touchpoint**: [Realtime Switch ↔ BMA Blockchain Settlement](BMA_PaymentSwitch_Integration_Analysis#2-realtime-switch--bma-blockchain-settlement)
 
 ### Realtime as BMA Supplier Module
 
@@ -547,7 +547,7 @@ Realtime Switch extends to blockchain settlement through a new **BMA Blockchain 
 - Regulatory compliance via Smart KYC NFTs
 - Traditional payment UX with blockchain benefits
 
-**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis.md#a-new-supplier-module-bma-blockchain-supplier)
+**Technical Integration**: [Full Details](BMA_PaymentSwitch_Integration_Analysis#a-new-supplier-module-bma-blockchain-supplier)
 
 ---
 <div align="right"><a href="#top">↑ Back to Top</a></div>
@@ -574,6 +574,6 @@ Realtime Switch is a battle-tested central orchestration platform processing 500
 
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 

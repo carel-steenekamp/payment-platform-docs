@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
 
 # BMA Collaboration Analysis: Nexus Evolution as Merchant Gateway
@@ -31,7 +31,7 @@ The Nexus Evolution platform (Realtime Switch, WebMerchant, Dashboard) demonstra
 
 ### BMA Business Model Recap
 
-From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
+From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis):
 
 **Block Markets Africa (BMA) - Open Financial Market Infrastructure (OpenFMI)**
 
@@ -52,11 +52,11 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 
 **Merchant-Facing Components**:
 
-1. **[WebMerchant](SwitchingAPI_Business_Architecture.md)** - REST API gateway for merchant integration
-2. **[Realtime Switch](Realtime_Business_Architecture.md)** - Transaction orchestration and state management
-3. **[Dashboard](Dashboard_Business_Architecture.md)** - Operational management portal
-4. **[OmniSocket](OmniSocket_Business_Architecture.md)** - Legacy terminal gateway
-5. **[Pay2ID](Pay2ID_Business_Architecture.md)** - Batch payment processing
+1. **[WebMerchant](SwitchingAPI_Business_Architecture)** - REST API gateway for merchant integration
+2. **[Realtime Switch](Realtime_Business_Architecture)** - Transaction orchestration and state management
+3. **[Dashboard](Dashboard_Business_Architecture)** - Operational management portal
+4. **[OmniSocket](OmniSocket_Business_Architecture)** - Legacy terminal gateway
+5. **[Pay2ID](Pay2ID_Business_Architecture)** - Batch payment processing
 
 **Proven Capabilities**:
 - Multi-tenant merchant management (aggregator-based isolation)
@@ -145,7 +145,7 @@ From [Block_Markets_Africa_Analysis.md](Block_Markets_Africa_Analysis.md):
 
 ### 1. WebMerchant API ↔ BMA Enterprise APIs
 
-**Reference**: [SwitchingAPI_Business_Architecture.md](SwitchingAPI_Business_Architecture.md) + [BMA Analysis §3](Block_Markets_Africa_Analysis.md#3-enterprise-development-framework)
+**Reference**: [SwitchingAPI_Business_Architecture.md](SwitchingAPI_Business_Architecture) + [BMA Analysis §3](Block_Markets_Africa_Analysis#3-enterprise-development-framework)
 
 #### Current WebMerchant Capabilities
 - **Product Purchase API**: `/api/transactions/product/purchase`
@@ -219,7 +219,7 @@ WebMerchant → BMA Enterprise API
 
 ### 2. Realtime Switch ↔ BMA Blockchain Settlement
 
-**Reference**: [Realtime_Business_Architecture.md](Realtime_Business_Architecture.md) + [BMA Analysis §2](Block_Markets_Africa_Analysis.md#2-regulated-user-wallets)
+**Reference**: [Realtime_Business_Architecture.md](Realtime_Business_Architecture) + [BMA Analysis §2](Block_Markets_Africa_Analysis#2-regulated-user-wallets)
 
 #### Current Realtime Switch Patterns
 - **Transaction State Machine**: Authorize → Confirm → Complete (or Reverse)
@@ -361,7 +361,7 @@ Merchant Balance → Query BMA wallet in real-time
 
 ### 3. Dashboard ↔ BMA Wallet Management
 
-**Reference**: [Dashboard_Business_Architecture.md](Dashboard_Business_Architecture.md) + [BMA Analysis §4](Block_Markets_Africa_Analysis.md#4-open-sandbox)
+**Reference**: [Dashboard_Business_Architecture.md](Dashboard_Business_Architecture) + [BMA Analysis §4](Block_Markets_Africa_Analysis#4-open-sandbox)
 
 #### Current Dashboard Capabilities
 - **Merchant Management**: CRUD, balance management, product assignment
@@ -465,7 +465,7 @@ New reports:
 
 ### 4. Cryptographic Services ↔ BMA Smart KYC NFTs
 
-**Reference**: [CryptographicServices_Business_Architecture.md](CryptographicServices_Business_Architecture.md) + [BMA Analysis §Technical Architecture](Block_Markets_Africa_Analysis.md#smart-kyc-nft-system)
+**Reference**: [CryptographicServices_Business_Architecture.md](CryptographicServices_Business_Architecture) + [BMA Analysis §Technical Architecture](Block_Markets_Africa_Analysis#smart-kyc-nft-system)
 
 #### Payment Switch Cryptographic Capabilities
 - **HSM Integration**: Thales HSM for PIN translation, key management
@@ -546,7 +546,7 @@ BMA Wallet Authorization:
 
 ### 5. Pay2ID Batch Processing ↔ BMA Tokenized Distributions
 
-**Reference**: [Pay2ID_Business_Architecture.md](Pay2ID_Business_Architecture.md) + [BMA Analysis §Real-World Assets](Block_Markets_Africa_Analysis.md#c-real-world-asset-tokenization)
+**Reference**: [Pay2ID_Business_Architecture.md](Pay2ID_Business_Architecture) + [BMA Analysis §Real-World Assets](Block_Markets_Africa_Analysis#c-real-world-asset-tokenization)
 
 #### Pay2ID Batch Capabilities
 - **Bulk Payouts**: Process thousands of payments in batch
@@ -637,7 +637,7 @@ BMA Blockchain:
 
 ### 6. OmniSocket Legacy Gateway ↔ BMA Terminal Integration
 
-**Reference**: [OmniSocket_Business_Architecture.md](OmniSocket_Business_Architecture.md) + [BMA Analysis §Wallet Apps](Block_Markets_Africa_Analysis.md#compliant)
+**Reference**: [OmniSocket_Business_Architecture.md](OmniSocket_Business_Architecture) + [BMA Analysis §Wallet Apps](Block_Markets_Africa_Analysis#compliant)
 
 #### OmniSocket Capabilities
 - **Terminal Protocol Gateway**: Translate legacy ISO 8583, TPDU protocols
@@ -709,7 +709,7 @@ BMA Blockchain:
 
 ### 7. ReconService ↔ BMA Blockchain Reconciliation
 
-**Reference**: [ReconService_Business_Architecture.md](ReconService_Business_Architecture.md) + [BMA Analysis §Transaction Monitoring](Block_Markets_Africa_Analysis.md#1-transaction-monitoring)
+**Reference**: [ReconService_Business_Architecture.md](ReconService_Business_Architecture) + [BMA Analysis §Transaction Monitoring](Block_Markets_Africa_Analysis#1-transaction-monitoring)
 
 #### ReconService Capabilities
 - **Multi-Source Reconciliation**: Correlate transactions from multiple systems
@@ -1146,19 +1146,19 @@ BMA Integration Settings:
 ## Related Documentation
 
 ### Nexus Evolution Components
-- **[Realtime Switch](Realtime_Business_Architecture.md)**: Transaction orchestration
-- **[WebMerchant API](SwitchingAPI_Business_Architecture.md)**: Merchant REST API
-- **[Dashboard](Dashboard_Business_Architecture.md)**: Operational management
-- **[Pay2ID](Pay2ID_Business_Architecture.md)**: Batch processing
-- **[OmniSocket](OmniSocket_Business_Architecture.md)**: Terminal gateway
-- **[ReconService](ReconService_Business_Architecture.md)**: Reconciliation
-- **[Cryptographic Services](CryptographicServices_Business_Architecture.md)**: HSM, PIN translation
+- **[Realtime Switch](Realtime_Business_Architecture)**: Transaction orchestration
+- **[WebMerchant API](SwitchingAPI_Business_Architecture)**: Merchant REST API
+- **[Dashboard](Dashboard_Business_Architecture)**: Operational management
+- **[Pay2ID](Pay2ID_Business_Architecture)**: Batch processing
+- **[OmniSocket](OmniSocket_Business_Architecture)**: Terminal gateway
+- **[ReconService](ReconService_Business_Architecture)**: Reconciliation
+- **[Cryptographic Services](CryptographicServices_Business_Architecture)**: HSM, PIN translation
 
 ### BMA Analysis
-- **[Block Markets Africa Analysis](Block_Markets_Africa_Analysis.md)**: Comprehensive BMA business/technical analysis
+- **[Block Markets Africa Analysis](Block_Markets_Africa_Analysis)**: Comprehensive BMA business/technical analysis
 
 ### Platform Overview
-- **[Platform Overview](index.md#top)**: Complete Nexus Evolution documentation index
+- **[Platform Overview](index#top)**: Complete Nexus Evolution documentation index
 
 ---
 <div align="right"><a href="#top">↑ Back to Top</a></div>
@@ -1172,5 +1172,5 @@ BMA Integration Settings:
 
 <a name="top"></a>
 
-[← Index](index.md#top) | [BMA Analysis](Block_Markets_Africa_Analysis.md#top) | [Collaboration Strategy](BMA_Collaboration_Analysis.md#top) | [↑ Top](#)
+[← Index](index#top) | [BMA Analysis](Block_Markets_Africa_Analysis#top) | [Collaboration Strategy](BMA_Collaboration_Analysis#top) | [↑ Top](#)
 
