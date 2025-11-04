@@ -15,6 +15,7 @@
 ### Business/Product Capabilities
 - **[Capabilities Index](#capabilities-index)** - Complete capability-by-capability breakdown with status
 - **[Supplier Integrations](Supplier_Integrations_Business_Architecture)** - Business overview of 13+ payment service providers
+- **[Fees and Commission](Fees_Commission_Conceptual_Design)** - Rule-based commission calculation and distribution (Conceptual)
 - **[Business Impact](#business-impact)** - Revenue protection, operational efficiency, risk mitigation
 - **[Component Documentation](#component-documentation)** - Detailed specifications by business function
 
